@@ -1,24 +1,52 @@
+/*
+ * Main styles
+ */
+
 .social-queue-meta-box {
+    overflow: hidden;
+}
+
+/*
+ * Content areas (left and right side blocks)
+ */
+
+.social-queue-details {
     overflow: hidden;
 }
 
 .social-queue-post {
     float: left;
     padding-right: 5%;
-    width: 65%;
-}
-
-.social-queue-networks ul li {
-    float: left;
-    padding-right: 10px;
+    width: 60%;
 }
 
 .social-queue-schedule {
     float: right;
-    width: 30%;
+    width: 35%;
 }
 
-.social-queue-description textarea {
+/*
+ * Social network post section
+ */
+
+.social-queue-selector {
+    overflow: hidden;
+}
+
+.social-queue-networks {
+    float: left;
+}
+
+.social-queue-count {
+    float: right;
+}
+
+.social-queue-count p {
+    color: #ccc;
+    font-style: italic;
+}
+
+.social-queue-message textarea {
     border: none;
     box-shadow: none;
     height: 100px;
@@ -32,6 +60,77 @@
     -moz-box-shadow: none;
 }
 
-.social-queue-description textarea:focus {
+.social-queue-message textarea:focus {
     outline: 0;
+}
+
+.social-queue-networks ul li,
+.social-queue-actions ul li {
+    float: left;
+    padding-right: 10px;
+}
+
+.social-queue-actions ul {
+    overflow: hidden;
+}
+
+.social-queue-custom-content label {
+    display: block;
+    font-weight: bold;
+    line-height: 2;
+    width: 100%;
+}
+
+/*
+ * Schedule form elements
+ */
+
+.social-queue-schedule-automatic,
+.social-queue-schedule-manual {
+    padding: 10px 0;
+}
+
+.social-queue-schedule-manual a {
+    text-decoration: none;
+}
+
+.social-queue-schedule-item {
+    margin-bottom: 10px;
+}
+
+/**
+ * Preview
+ */
+
+.social-queue-preview-box {
+    background: #f6f6f6;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.social-queue-preview-image {
+    float: left;
+    width: 30%;
+}
+
+.social-queue-preview-content {
+    float: right;
+    width: 65%;
+}
+
+.social-queue-preview-image img {
+    background: #fff;
+    height: 100px;
+    width: 100%;
+}
+
+.social-queue-preview-content h3,
+.social-queue-preview-content p {
+    margin: 5px 0;
+}
+
+.social-queue-preview-content p.social-queue-url {
+    color: #999;
+    font-style: italic;
 }
