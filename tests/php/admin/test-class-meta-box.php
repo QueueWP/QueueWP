@@ -51,7 +51,7 @@ class Test_Meta_Box extends \WP_UnitTestCase {
 		Social_Queue::get()->admin->meta_box->render_meta_box();
 		$meta_box = ob_get_clean();
 
-		$this->assertContains( '<div class="social-queue-meta-box">', $meta_box );
+		$this->assertContains( '<div id="social-queue-meta-box">', $meta_box );
 	}
 
 	/**

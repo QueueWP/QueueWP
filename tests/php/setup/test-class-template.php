@@ -20,6 +20,8 @@ use Social_Queue\Social_Queue;
 class Test_Template extends \WP_UnitTestCase {
 
 	/**
+	 * Make sure that a template gets loaded.
+	 *
 	 * @covers Social_Queue\Utility\Template::load()
 	 */
 	public function test_load() {
@@ -27,6 +29,6 @@ class Test_Template extends \WP_UnitTestCase {
 		Social_Queue::get()->utility->template->load( 'admin/meta-box.php' );
 		$template = ob_get_clean();
 
-		$this->assertContains( '<div class="social-queue-meta-box">', $template );
+		$this->assertContains( '<div id="social-queue-meta-box">', $template );
 	}
 }
