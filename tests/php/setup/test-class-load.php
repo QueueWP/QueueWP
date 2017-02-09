@@ -38,46 +38,58 @@ class Test_Load extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers Social_Queue\Setup\Load::load()
+	 * Tests that classes are loaded.
+	 *
+	 * @covers Social_Queue\Setup\Load::general_load()
 	 */
-	public function test_if_classes_are_loaded() {
+	public function test_general_load() {
 		$this->assertTrue( class_exists( 'Social_Queue\Utility\Template' ) );
 	}
 
 	/**
-	 * @covers Social_Queue\Setup\Load::init()
+	 * Tests if objects are created.
+	 *
+	 * @covers Social_Queue\Setup\Load::general_init()
 	 */
-	public function test_if_objects_are_created() {
+	public function test_general_init() {
 		$this->assertNotEmpty( Social_Queue::get()->utility->template );
 		$this->assertInstanceOf( 'Social_Queue\Utility\Template', Social_Queue::get()->utility->template );
 	}
 
 	/**
+	 * Tests if admin classes are loaded.
+	 *
 	 * @covers Social_Queue\Setup\Load::load_admin()
 	 */
-	public function test_if_admin_classes_are_loaded() {
+	public function test_load_admin() {
 		$this->assertTrue( class_exists( 'Social_Queue\Admin\Meta_Box' ) );
 	}
 
 	/**
+	 * Tests if admin objects are created.
+	 *
 	 * @covers Social_Queue\Setup\Load::init_admin()
 	 */
-	public function test_if_admin_objects_are_created() {
+	public function test_init_admin() {
 		$this->assertNotEmpty( Social_Queue::get()->admin->meta_box );
 		$this->assertInstanceOf( 'Social_Queue\Admin\Meta_Box', Social_Queue::get()->admin->meta_box );
 	}
 
 	/**
+	 * Tests if the admin collection is returned.
+	 *
 	 * @covers Social_Queue\Setup\Load::get_admin_collection()
 	 */
-	public function test_admin_collection_is_returned() {
+	public function test_get_admin_collection() {
 		$this->assertTrue( is_object( Social_Queue::get()->setup->load->get_admin_collection() ) );
 	}
 
 	/**
+	 * Tests if the utility collection is returned.
+	 *
 	 * @covers Social_Queue\Setup\Load::get_utility_collection()
 	 */
-	public function test_utility_collection_is_returned() {
+	public function test_get_utility_collection() {
 		$this->assertTrue( is_object( Social_Queue::get()->setup->load->get_utility_collection() ) );
 	}
 }

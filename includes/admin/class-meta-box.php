@@ -70,6 +70,13 @@ class Meta_Box {
 		Social_Queue::get()->utility->template->load( 'admin/meta-box.php' );
 	}
 
+	/**
+	 * Meta Box Styles
+	 *
+	 * Adds styles to the admin area for the Social Queue meta box.
+	 *
+	 * @since 0.1
+	 */
 	public function meta_box_styles() {
 		wp_register_style( self::META_BOX_STYLE_HANDLE, Social_Queue::get()->plugin_url . 'assets/css/admin/meta-box.css', false, '0.1' );
 

@@ -22,7 +22,7 @@ class Test_Template extends \WP_UnitTestCase {
 	/**
 	 * @covers Social_Queue\Utility\Template::load()
 	 */
-	public function test_should_load_a_template() {
+	public function test_load() {
 		ob_start();
 		Social_Queue::get()->utility->template->load( 'admin/meta-box.php' );
 		$template = ob_get_clean();

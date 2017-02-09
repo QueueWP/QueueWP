@@ -20,17 +20,22 @@ use Social_Queue\Social_Queue;
  */
 class Test_Social_Queue extends WP_UnitTestCase {
 	/**
+	 * Tests that an instand sets up the global paths.
+	 *
 	 * @covers Social_Queue::__construct()
 	 */
-	public function test_instance_sets_up_global_paths() {
+	public function test_construct() {
 		$this->assertTrue( strlen( Social_Queue::get()->plugin_url ) > 0 );
 		$this->assertTrue( strlen( Social_Queue::get()->plugin_dir ) > 0 );
 	}
 
 	/**
+	 * Test that only one of the same instance will get returned and exist in
+	 * memory.
+	 *
 	 * @covers Social_Queue::get()
 	 */
-	public function test_instance_will_return_only_instance_of_plugin() {
+	public function test_get() {
 		$this->assertTrue( is_object( Social_Queue::get() ) );
 		$this->assertInstanceOf( 'Social_Queue\Social_Queue', Social_Queue::get() );
 
@@ -39,9 +44,11 @@ class Test_Social_Queue extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests that files are loaded and objects are created.
+	 *
 	 * @covers Social_Queue::setup()
 	 */
-	public function test_setup_should_load_objects_and_create_collections() {
+	public function test_setup() {
 		$this->assertTrue( class_exists( 'Social_Queue\Setup\Load' ) );
 		$this->assertInstanceOf( 'Social_Queue\Setup\Load', Social_Queue::get()->setup->load );
 		$this->assertTrue( is_object( Social_Queue::get()->admin ) );

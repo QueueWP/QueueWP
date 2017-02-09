@@ -64,8 +64,8 @@ class Load {
 		/**
 		 * General functionality.
 		 */
-		$this->load();
-		$this->init();
+		$this->general_load();
+		$this->general_init();
 	}
 
 	/**
@@ -76,7 +76,7 @@ class Load {
 	 *
 	 * @since 0.1
 	 */
-	public function load() {
+	public function general_load() {
 		require_once( Social_Queue::get()->plugin_dir . 'includes/utility/class-template.php' );
 	}
 
@@ -87,7 +87,7 @@ class Load {
 	 *
 	 * @since 0.1
 	 */
-	public function init() {
+	public function general_init() {
 		$this->utility->template = new Template();
 	}
 
