@@ -1,4 +1,4 @@
-<div class="social-queue-meta-box">
+<div id="social-queue-meta-box">
 	<div class="social-queue-details">
         <div class="social-queue-post">
             <div class="social-queue-selector">

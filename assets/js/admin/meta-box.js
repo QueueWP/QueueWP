@@ -5,38 +5,35 @@
 var socialQueueMetaBox = ( function( $ ) {
 	'use strict';
 
-	var component				= {},
-		elEditButton		= $( '.social-queue-edit' ),
-		elNoButton			= $( '.social-queue-schedule-no-action' ),
-		elAutoButton		= $( '.social-queue-schedule-automatic-action' ),
-		elManualButton		= $( '.social-queue-schedule-manual-action' ),
+	var component			= {},
+		elMetaBox			= $( '#social-queue-meta-box' ),
 		elEditor			= $( '.social-queue-custom-content' ),
 		elScheduleAutomatic	= $( '.social-queue-schedule-automatic' ),
 		elScheduleManual	= $( '.social-queue-schedule-manual' );
 
 	component.init = function() {
-		elEditButton.on( 'click', function( event ) {
-			component.toggleContent( event, elEditor, true );
+		elMetaBox.on( 'click', '.social-queue-edit',  function( e ) {
+			component.toggleContent( e, elEditor, true );
 		} );
 
-		elNoButton.on( 'click', function() {
+		elMetaBox.on( 'click', '.social-queue-schedule-no-action', function() {
 			component.hideContent( [ elScheduleAutomatic, elScheduleManual ] );
 		} );
 
-		elAutoButton.on( 'click', function( event ) {
+		elMetaBox.on( 'click', '.social-queue-schedule-automatic-action', function( e ) {
 			component.hideContent( [ elScheduleManual ] );
-			component.toggleContent( event, elScheduleAutomatic, false );
+			component.toggleContent( e, elScheduleAutomatic, false );
 		} );
 
-		elManualButton.on( 'click', function( event ) {
+		elMetaBox.on( 'click', '.social-queue-schedule-manual-action', function( e ) {
 			component.hideContent( [ elScheduleAutomatic ] );
-			component.toggleContent( event, elScheduleManual, false );
+			component.toggleContent( e, elScheduleManual, false );
 		} );
 	};
 
-	component.toggleContent = function( event, content, preventDefault ) {
+	component.toggleContent = function( e, content, preventDefault ) {
 		if ( preventDefault ) {
-			event.preventDefault();
+			e.preventDefault();
 		}
 
 		content.toggle();
