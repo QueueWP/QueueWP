@@ -37,6 +37,7 @@ class Test_Meta_Box extends \WP_UnitTestCase {
 	 */
 	public function test_construct() {
 		$this->assertEquals( 1, has_action( 'add_meta_boxes', array( Social_Queue::get()->admin->meta_box, 'create_meta_box' ) ) );
+		$this->assertEquals( 10, has_action( 'admin_enqueue_scripts', array( Social_Queue::get()->admin->meta_box, 'meta_box_scripts' ) ) );
 		$this->assertEquals( 10, has_action( 'admin_enqueue_scripts', array( Social_Queue::get()->admin->meta_box, 'meta_box_styles' ) ) );
 	}
 
@@ -51,6 +52,17 @@ class Test_Meta_Box extends \WP_UnitTestCase {
 		$meta_box = ob_get_clean();
 
 		$this->assertContains( '<div class="social-queue-meta-box">', $meta_box );
+	}
+
+	/**
+	 * Tests that the admin scripts are loaded.
+	 *
+	 * @covers Social_Queue\Admin\Meta_Box::meta_box_scripts()
+	 */
+	public function test_meta_box_scripts() {
+		Social_Queue::get()->admin->meta_box->meta_box_scripts();
+		$this->assertTrue( wp_script_is( Meta_Box::META_BOX_STYLE_HANDLE, 'registered' ) );
+		$this->assertTrue( wp_script_is( Meta_Box::META_BOX_STYLE_HANDLE, 'enqueued' ) );
 	}
 
 	/**

@@ -134,3 +134,12 @@
     color: #999;
     font-style: italic;
 }
+
+/**
+ * Set default states
+ */
+.social-queue-custom-content,
+.social-queue-schedule-automatic,
+.social-queue-schedule-manual {
+    display: none;
+}
