@@ -1,6 +1,6 @@
 <?php
 /**
- * Setup: Load class
+ * Setup: Bootstrap class
  *
  * Responsible for loading and creating instances of all objects needed for
  * plugin to run.
@@ -16,14 +16,14 @@ use QueueWP\Admin\Meta_Box;
 use QueueWP\Utility\Template;
 
 /**
- * Class Load
+ * Class Bootstrap
  *
  * Used for including files needed in the plugin.
  *
  * @package QueueWP
  * @since 0.1
  */
-class Load {
+class Bootstrap {
 	/**
 	 * Admin
 	 *
@@ -45,7 +45,7 @@ class Load {
 	public $utility;
 
 	/**
-	 * Load constructor.
+	 * Bootstrap constructor.
 	 *
 	 * @since 0.1
 	 */

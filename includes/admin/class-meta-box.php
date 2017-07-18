@@ -79,7 +79,7 @@ class Meta_Box {
 			true
 		);
 
-		wp_add_inline_script( self::META_BOX_STYLE_HANDLE, 'QueueWPMetaBox.init();', 'after' );
+		wp_add_inline_script( self::META_BOX_STYLE_HANDLE, 'queueWPMetaBox.init();', 'after' );
 
 		/**
 		 * @todo Only enqueue this if we are going to display it.

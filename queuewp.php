@@ -21,7 +21,7 @@
 
 namespace QueueWP;
 
-use QueueWP\Setup\Load;
+use QueueWP\Setup\Bootstrap;
 
 /**
  * Class QueueWP
@@ -111,18 +111,16 @@ class QueueWP {
 	}
 
 	/**
-	 * Setup
-	 *
 	 * Gets the party started - i.e. sets up plugin objects.
 	 *
 	 * @since 0.1
 	 */
 	public function setup() {
-		require_once( $this->plugin_dir . '/includes/setup/class-load.php' );
-		$this->setup->load = new Load();
+		require_once( $this->plugin_dir . '/includes/setup/class-bootstrap.php' );
+		$this->setup->bootstrap = new Bootstrap();
 
-		$this->admin   = $this->setup->load->get_admin_collection();
-		$this->utility = $this->setup->load->get_utility_collection();
+		$this->admin   = $this->setup->bootstrap->get_admin_collection();
+		$this->utility = $this->setup->bootstrap->get_utility_collection();
 	}
 }
 
