@@ -1,6 +1,6 @@
 === Test Plugin ===
-Contributors: wpgeeks, mattgeri
-Tags: social, social media, buffer, social posting, facebook, twitter
+Contributors: QueueWP, mattgeri
+Tags: social, social media, social posting, facebook, twitter
 Requires at least: 4.7.2
 Tested up to: 4.7.2
 Stable tag: 0.1

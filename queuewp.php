@@ -1,37 +1,37 @@
 <?php
 /**
- * Init: Social_Queue class
+ * Init: QueueWP class
  *
  * Main plugin file which is used for setting up and creating the plugin.
  *
- * @package Social_Queue
+ * @package QueueWP
  * @since 0.1
  */
 
 /**
- * Plugin Name: Social Queue by WPGeeks.com
+ * Plugin Name: QueueWP
  * Version: 0.1
- * Plugin URI: https://wpgeeks.com/labs/social-queue/
- * Description: Schedule and customize your content to Social networks
- * Author: WPGeeks
- * Author URI: https://wpgeeks.com/
- * Text Domain: social-queue
+ * Plugin URI: https://queuewp.com
+ * Description: Automate and track social networking postings
+ * Author: QueueWP
+ * Author URI: https://queuewp.com
+ * Text Domain: queuewp
  * License: GPL v3
  */
 
-namespace Social_Queue;
+namespace QueueWP;
 
-use Social_Queue\Setup\Load;
+use QueueWP\Setup\Load;
 
 /**
- * Class Social_Queue
+ * Class QueueWP
  *
  * Main class used for initializing the whole plugin.
  *
- * @package Social_Queue
+ * @package QueueWP
  * @since 0.1
  */
-class Social_Queue {
+class QueueWP {
 	/**
 	 * Instance
 	 *
@@ -81,7 +81,7 @@ class Social_Queue {
 	public $admin;
 
 	/**
-	 * Social_Queue constructor.
+	 * QueueWP constructor.
 	 *
 	 * @since 0.1
 	 */
@@ -95,21 +95,19 @@ class Social_Queue {
 	}
 
 	/**
-	 * Get
-	 *
 	 * Part of the singleton pattern, this method is used to return only a
-	 * single instance of the Social_Queue object and ensure that it will only
+	 * single instance of the QueueWP object and ensure that it will only
 	 * ever get created once in memory.
 	 *
 	 * @since 0.1
 	 * @return object
 	 */
 	public static function get() {
-		if ( empty( Social_Queue::$instance ) ) {
-			Social_Queue::$instance = new Social_Queue();
+		if ( empty( QueueWP::$instance ) ) {
+			QueueWP::$instance = new QueueWP();
 		}
 
-		return Social_Queue::$instance;
+		return QueueWP::$instance;
 	}
 
 	/**
@@ -131,4 +129,4 @@ class Social_Queue {
 /**
  * Kick things off immediately by creating an instance of the plugin.
  */
-Social_Queue::get();
+QueueWP::get();

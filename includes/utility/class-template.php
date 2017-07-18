@@ -4,20 +4,20 @@
  *
  * Deals with templating on the front and back end.
  *
- * @package Social_Queue\Utility
+ * @package QueueWP\Utility
  * @since 0.1
  */
 
-namespace Social_Queue\Utility;
+namespace QueueWP\Utility;
 
-use Social_Queue\Social_Queue;
+use QueueWP\QueueWP;
 
 /**
  * Class Template
  *
  * Provides functionality for loading templates.
  *
- * @package Social_Queue\Setup
+ * @package QueueWP\Setup
  * @since 0.1
  */
 class Template {
@@ -30,7 +30,7 @@ class Template {
 	 * templates directory.
 	 */
 	public function load( $template_path ) {
-		$template = Social_Queue::get()->plugin_dir . 'templates/' . $template_path;
+		$template = QueueWP::get()->plugin_dir . 'templates/' . $template_path . '.php';
 
 		if ( file_exists( $template ) ) {
 			include( $template );

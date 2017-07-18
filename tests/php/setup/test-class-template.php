@@ -4,31 +4,33 @@
  *
  * Tests the functionality in utility/class-template.php
  *
- * @package Social_Queue
+ * @package QueueWP
  * @since 0.1
  */
 
-use Social_Queue\Social_Queue;
+use QueueWP\QueueWP;
 
 /**
  * Class Test_Template
  *
  * Tests for the Template class methods.
  *
- * @covers Social_Queue\Utility\Template
+ * @since 0.1
+ * @covers QueueWP\Utility\Template
  */
 class Test_Template extends \WP_UnitTestCase {
 
 	/**
 	 * Make sure that a template gets loaded.
 	 *
-	 * @covers Social_Queue\Utility\Template::load()
+	 * @since 0.1
+	 * @covers QueueWP\Utility\Template::load()
 	 */
 	public function test_load() {
 		ob_start();
-		Social_Queue::get()->utility->template->load( 'admin/meta-box.php' );
+		QueueWP::get()->utility->template->load( 'admin/meta-box' );
 		$template = ob_get_clean();
 
-		$this->assertContains( '<div id="social-queue-meta-box">', $template );
+		$this->assertContains( '<div id="queuewp-meta-box">', $template );
 	}
 }

@@ -2,7 +2,7 @@
  * Main styles
  */
 
-#social-queue-meta-box {
+#queuewp-meta-box {
     overflow: hidden;
 }
 
@@ -10,17 +10,17 @@
  * Content areas (left and right side blocks)
  */
 
-.social-queue-details {
+.queuewp-details {
     overflow: hidden;
 }
 
-.social-queue-post {
+.queuewp-post {
     float: left;
     padding-right: 5%;
     width: 60%;
 }
 
-.social-queue-schedule {
+.queuewp-schedule {
     float: right;
     width: 35%;
 }
@@ -29,24 +29,24 @@
  * Social network post section
  */
 
-.social-queue-selector {
+.queuewp-selector {
     overflow: hidden;
 }
 
-.social-queue-networks {
+.queuewp-networks {
     float: left;
 }
 
-.social-queue-count {
+.queuewp-count {
     float: right;
 }
 
-.social-queue-count p {
+.queuewp-count p {
     color: #ccc;
     font-style: italic;
 }
 
-.social-queue-message textarea {
+.queuewp-message textarea {
     border: none;
     box-shadow: none;
     height: 100px;
@@ -60,21 +60,21 @@
     -moz-box-shadow: none;
 }
 
-.social-queue-message textarea:focus {
+.queuewp-message textarea:focus {
     outline: 0;
 }
 
-.social-queue-networks ul li,
-.social-queue-actions ul li {
+.queuewp-networks ul li,
+.queuewp-actions ul li {
     float: left;
     padding-right: 10px;
 }
 
-.social-queue-actions ul {
+.queuewp-actions ul {
     overflow: hidden;
 }
 
-.social-queue-custom-content label {
+.queuewp-custom-content label {
     display: block;
     font-weight: bold;
     line-height: 2;
@@ -85,16 +85,16 @@
  * Schedule form elements
  */
 
-.social-queue-schedule-automatic,
-.social-queue-schedule-manual {
+.queuewp-schedule-automatic,
+.queuewp-schedule-manual {
     padding: 10px 0;
 }
 
-.social-queue-schedule-manual a {
+.queuewp-schedule-manual a {
     text-decoration: none;
 }
 
-.social-queue-schedule-item {
+.queuewp-schedule-item {
     margin-bottom: 10px;
 }
 
@@ -102,35 +102,35 @@
  * Preview
  */
 
-.social-queue-preview-box {
+.queuewp-preview-box {
     background: #f6f6f6;
     border: 1px solid #ddd;
     overflow: hidden;
     padding: 10px;
 }
 
-.social-queue-preview-image {
+.queuewp-preview-image {
     float: left;
     width: 30%;
 }
 
-.social-queue-preview-content {
+.queuewp-preview-content {
     float: right;
     width: 65%;
 }
 
-.social-queue-preview-image img {
+.queuewp-preview-image img {
     background: #fff;
     height: 100px;
     width: 100%;
 }
 
-.social-queue-preview-content h3,
-.social-queue-preview-content p {
+.queuewp-preview-content h3,
+.queuewp-preview-content p {
     margin: 5px 0;
 }
 
-.social-queue-preview-content p.social-queue-url {
+.queuewp-preview-content p.queuewp-url {
     color: #999;
     font-style: italic;
 }
@@ -138,8 +138,9 @@
 /**
  * Set default states
  */
-.social-queue-custom-content,
-.social-queue-schedule-automatic,
-.social-queue-schedule-manual {
+
+.queuewp-custom-content,
+.queuewp-schedule-automatic,
+.queuewp-schedule-manual {
     display: none;
 }

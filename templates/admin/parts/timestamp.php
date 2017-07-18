@@ -1,6 +1,6 @@
 <div class="timestamp-wrap">
 	<label>
-		<span class="screen-reader-text"><?php esc_html_e( 'Month', 'social-queue' ); ?></span>
+		<span class="screen-reader-text"><?php esc_html_e( 'Month', 'queuewp' ); ?></span>
 		<select id="mm" name="mm">
 			<option value="01" data-text="Jan">01-Jan</option>
 			<option value="02" data-text="Feb">02-Feb</option>
@@ -17,20 +17,20 @@
 		</select>
 	</label>
 	<label>
-		<span class="screen-reader-text"><?php esc_html_e( 'Day', 'social-queue' ); ?></span>
+		<span class="screen-reader-text"><?php esc_html_e( 'Day', 'queuewp' ); ?></span>
 		<input type="text" id="jj" name="jj" value="08" size="2" maxlength="2" autocomplete="off"></label>,
 	<label>
-		<span class="screen-reader-text"><?php esc_html_e( 'Year', 'social-queue' ); ?></span>
+		<span class="screen-reader-text"><?php esc_html_e( 'Year', 'queuewp' ); ?></span>
 		<input type="text" id="aa" name="aa" value="2017" size="4" maxlength="4" autocomplete="off">
 	</label>
 	@
 	<label>
-		<span class="screen-reader-text"><?php esc_html_e( 'Hour', 'social-queue' ); ?></span>
+		<span class="screen-reader-text"><?php esc_html_e( 'Hour', 'queuewp' ); ?></span>
 		<input type="text" id="hh" name="hh" value="17" size="2" maxlength="2" autocomplete="off">
 	</label>
 	:
 	<label>
-		<span class="screen-reader-text"><?php esc_html_e( 'Minute', 'social-queue' ); ?></span>
+		<span class="screen-reader-text"><?php esc_html_e( 'Minute', 'queuewp' ); ?></span>
 		<input type="text" id="mn" name="mn" value="53" size="2" maxlength="2" autocomplete="off">
 	</label>
 	<span class="dashicons dashicons-dismiss"></span>

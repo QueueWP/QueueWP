@@ -5,22 +5,22 @@
  * Responsible for loading and creating instances of all objects needed for
  * plugin to run.
  *
- * @package Social_Queue
+ * @package QueueWP
  * @since 0.1
  */
 
-namespace Social_Queue\Setup;
+namespace QueueWP\Setup;
 
-use Social_Queue\Social_Queue;
-use Social_Queue\Admin\Meta_Box;
-use Social_Queue\Utility\Template;
+use QueueWP\QueueWP;
+use QueueWP\Admin\Meta_Box;
+use QueueWP\Utility\Template;
 
 /**
  * Class Load
  *
  * Used for including files needed in the plugin.
  *
- * @package Social_Queue
+ * @package QueueWP
  * @since 0.1
  */
 class Load {
@@ -69,20 +69,16 @@ class Load {
 	}
 
 	/**
-	 * Load
-	 *
 	 * Loads the classes that will be used throughout the plugin frontend and WP
 	 * Admin.
 	 *
 	 * @since 0.1
 	 */
 	public function general_load() {
-		require_once( Social_Queue::get()->plugin_dir . 'includes/utility/class-template.php' );
+		require_once( QueueWP::get()->plugin_dir . 'includes/utility/class-template.php' );
 	}
 
 	/**
-	 * Init
-	 *
 	 * Creates objects for the utility functionality we provide.
 	 *
 	 * @since 0.1
@@ -92,20 +88,16 @@ class Load {
 	}
 
 	/**
-	 * Load Admin
-	 *
 	 * Loads the classes that will be used for the admin based functionality in
 	 * the WP Admin area.
 	 *
 	 * @since 0.1
 	 */
 	public function load_admin() {
-		require_once( Social_Queue::get()->plugin_dir . 'includes/admin/class-meta-box.php' );
+		require_once( QueueWP::get()->plugin_dir . 'includes/admin/class-meta-box.php' );
 	}
 
 	/**
-	 * Init Admin
-	 *
 	 * Creates objects from the classes that we loaded used for the admin
 	 * functionality inside the WP Admin area.
 	 *
@@ -116,8 +108,6 @@ class Load {
 	}
 
 	/**
-	 * Get Admin Collection
-	 *
 	 * Returns an object which includes all the objects we created for the admin
 	 * functionality inside the WP Admin area.
 	 *
@@ -129,8 +119,6 @@ class Load {
 	}
 
 	/**
-	 * Get Utility Collection
-	 *
 	 * Returns an object which includes all the objects we created for the
 	 * utility functionality.
 	 *
