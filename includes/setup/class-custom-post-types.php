@@ -10,8 +10,6 @@
 
 namespace QueueWP\Setup;
 
-use QueueWP\QueueWP;
-
 /**
  * Class Custom_Post_Types
  *
