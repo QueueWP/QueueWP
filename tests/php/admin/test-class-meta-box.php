@@ -28,8 +28,8 @@ class Test_Meta_Box extends \WP_UnitTestCase {
 		 */
 		wp_set_current_user( 1 );
 		set_current_screen( 'edit.php' );
-		QueueWP::get()->setup->load->load_admin();
-		QueueWP::get()->setup->load->init_admin();
+		QueueWP::get()->setup->bootstrap->load_admin();
+		QueueWP::get()->setup->bootstrap->init_admin();
 	}
 
 	/**

@@ -52,8 +52,8 @@ class Test_QueueWP extends WP_UnitTestCase {
 	 * @covers QueueWP::setup()
 	 */
 	public function test_setup() {
-		$this->assertTrue( class_exists( 'QueueWP\Setup\Load' ) );
-		$this->assertInstanceOf( 'QueueWP\Setup\Load', QueueWP::get()->setup->load );
+		$this->assertTrue( class_exists( 'QueueWP\Setup\Bootstrap' ) );
+		$this->assertInstanceOf( 'QueueWP\Setup\Bootstrap', QueueWP::get()->setup->bootstrap );
 		$this->assertTrue( is_object( QueueWP::get()->admin ) );
 		$this->assertTrue( is_object( QueueWP::get()->utility ) );
 	}

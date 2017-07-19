@@ -90,8 +90,6 @@ class QueueWP {
 		$this->plugin_url = plugin_dir_url( __FILE__ );
 
 		$this->setup = new \stdClass;
-
-		add_action( 'init', array( $this, 'setup' ) );
 	}
 
 	/**
@@ -105,6 +103,7 @@ class QueueWP {
 	public static function get() {
 		if ( empty( QueueWP::$instance ) ) {
 			QueueWP::$instance = new QueueWP();
+			QueueWP::$instance->init();
 		}
 
 		return QueueWP::$instance;
@@ -115,10 +114,12 @@ class QueueWP {
 	 *
 	 * @since 0.1
 	 */
-	public function setup() {
+	public function init() {
 		require_once( $this->plugin_dir . '/includes/setup/class-bootstrap.php' );
 		$this->setup->bootstrap = new Bootstrap();
+		$this->setup->bootstrap->init();
 
+		$this->setup   = (object) array_merge( (array) $this->setup, (array) $this->setup->bootstrap->get_setup_collection() );
 		$this->admin   = $this->setup->bootstrap->get_admin_collection();
 		$this->utility = $this->setup->bootstrap->get_utility_collection();
 	}

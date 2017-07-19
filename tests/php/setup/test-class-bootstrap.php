@@ -34,8 +34,8 @@ class Test_Load extends \WP_UnitTestCase {
 		 */
 		wp_set_current_user( 1 );
 		set_current_screen( 'edit.php' );
-		QueueWP::get()->setup->load->load_admin();
-		QueueWP::get()->setup->load->init_admin();
+		QueueWP::get()->setup->bootstrap->load_admin();
+		QueueWP::get()->setup->bootstrap->init_admin();
 	}
 
 	/**
@@ -87,7 +87,7 @@ class Test_Load extends \WP_UnitTestCase {
 	 * @covers QueueWP\Setup\Load::get_admin_collection()
 	 */
 	public function test_get_admin_collection() {
-		$this->assertTrue( is_object( QueueWP::get()->setup->load->get_admin_collection() ) );
+		$this->assertTrue( is_object( QueueWP::get()->setup->bootstrap->get_admin_collection() ) );
 	}
 
 	/**
@@ -97,6 +97,6 @@ class Test_Load extends \WP_UnitTestCase {
 	 * @covers QueueWP\Setup\Load::get_utility_collection()
 	 */
 	public function test_get_utility_collection() {
-		$this->assertTrue( is_object( QueueWP::get()->setup->load->get_utility_collection() ) );
+		$this->assertTrue( is_object( QueueWP::get()->setup->bootstrap->get_utility_collection() ) );
 	}
 }

@@ -25,6 +25,16 @@ use QueueWP\Utility\Template;
  */
 class Bootstrap {
 	/**
+	 * Setup
+	 *
+	 * Class containing setup functionality objects.
+	 *
+	 * @since 0.1
+	 * @var object
+	 */
+	public $setup;
+
+	/**
 	 * Admin
 	 *
 	 * Class containing admin functionality objects.
@@ -49,9 +59,13 @@ class Bootstrap {
 	 *
 	 * @since 0.1
 	 */
-	public function __construct() {
+	public function init() {
+		$this->setup   = new \stdClass;
 		$this->admin   = new \stdClass;
 		$this->utility = new \stdClass;
+
+		$this->setup_load();
+		$this->setup_init();
 
 		/**
 		 * Admin related functionality.
@@ -66,6 +80,25 @@ class Bootstrap {
 		 */
 		$this->general_load();
 		$this->general_init();
+	}
+
+	/**
+	 * Loads the classes that setup the base plugin functionality.
+	 *
+	 * @since 0.1
+	 */
+	public function setup_load() {
+		require_once( QueueWP::get()->plugin_dir . 'includes/setup/class-custom-post-types.php' );
+	}
+
+	/**
+	 * Creates objects for the setup functionality we provide.
+	 *
+	 * @since 0.1
+	 */
+	public function setup_init() {
+		$this->setup->custom_post_types = new Custom_Post_Types();
+		$this->setup->custom_post_types->init();
 	}
 
 	/**
@@ -105,6 +138,17 @@ class Bootstrap {
 	 */
 	public function init_admin() {
 		$this->admin->meta_box = new Meta_Box();
+	}
+
+	/**
+	 * Returns an object which includes all the objects we created for the
+	 * initial plugin setup.
+	 *
+	 * @since 0.1
+	 * @return object
+	 */
+	public function get_setup_collection() {
+		return $this->setup;
 	}
 
 	/**
