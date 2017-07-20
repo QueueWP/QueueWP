@@ -111,5 +111,6 @@ class Bootstrap {
 	 */
 	public function admin_init() {
 		$this->admin->meta_box = new Meta_Box();
+		$this->admin->meta_box->init();
 	}
 }
