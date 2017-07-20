@@ -57,28 +57,12 @@ class QueueWP {
 	public $plugin_url;
 
 	/**
-	 * Setup
+	 * Bootstrap object
 	 *
 	 * @since 0.1
-	 * @var object $setup Collection of objects used for setup.
+	 * @var object $bootstrap Bootstrap object which contains all system objects.
 	 */
-	public $setup;
-
-	/**
-	 * Utility
-	 *
-	 * @since 0.1
-	 * @var object $admin Collection of objects used for utility.
-	 */
-	public $utility;
-
-	/**
-	 * Admin
-	 *
-	 * @since 0.1
-	 * @var object $admin Collection of objects used for admin.
-	 */
-	public $admin;
+	public $bootstrap;
 
 	/**
 	 * QueueWP constructor.
@@ -88,8 +72,6 @@ class QueueWP {
 	public function __construct() {
 		$this->plugin_dir = plugin_dir_path( __FILE__ );
 		$this->plugin_url = plugin_dir_url( __FILE__ );
-
-		$this->setup = new \stdClass;
 	}
 
 	/**
@@ -115,17 +97,65 @@ class QueueWP {
 	 * @since 0.1
 	 */
 	public function init() {
-		require_once( $this->plugin_dir . '/includes/setup/class-bootstrap.php' );
-		$this->setup->bootstrap = new Bootstrap();
-		$this->setup->bootstrap->init();
+		$this->bootstrap = new Bootstrap();
+		$this->bootstrap->init();
+	}
 
-		$this->setup   = (object) array_merge( (array) $this->setup, (array) $this->setup->bootstrap->get_setup_collection() );
-		$this->admin   = $this->setup->bootstrap->get_admin_collection();
-		$this->utility = $this->setup->bootstrap->get_utility_collection();
+	/**
+	 * Returns the setup objects created by Bootstrap.
+	 *
+	 * @since 0.1
+	 * @return \stdClass
+	 */
+	public function setup() {
+		return $this->bootstrap->setup;
+	}
+
+	/**
+	 * Returns the admin objects created by Bootstrap.
+	 *
+	 * @since 0.1
+	 * @return \stdClass
+	 */
+	public function admin() {
+		return $this->bootstrap->admin;
+	}
+
+	/**
+	 * Returns the utility objects created by Bootstrap.
+	 *
+	 * @since 0.1
+	 * @return \stdClass
+	 */
+	public function utility() {
+		return $this->bootstrap->utility;
 	}
 }
 
 /**
+ * Autoloader to automatically require our class files.
+ *
+ * @since 1.0
+ */
+function autoload( $class ) {
+	if ( strpos( $class, 'QueueWP\\' ) !== 0 ) {
+		return;
+	}
+
+	$class = strtolower( str_replace( array( 'QueueWP\\', '_' ), array( '', '-' ), $class ) );
+	$paths = explode( '\\', $class );
+	$class = array_pop( $paths );
+
+	$file = plugin_dir_path( __FILE__ ) . 'includes/' . implode( '/', $paths ) . '/class-' . $class . '.php';
+
+	if ( file_exists( $file ) ) {
+		require_once( $file );
+	}
+}
+
+spl_autoload_register( '\QueueWP\autoload' );
+
+/*
  * Kick things off immediately by creating an instance of the plugin.
  */
 QueueWP::get();

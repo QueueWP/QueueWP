@@ -8,10 +8,16 @@
  * @since 0.1
  */
 
-use QueueWP\QueueWP;
 use QueueWP\Admin\Meta_Box;
 
 class Test_Meta_Box extends \WP_UnitTestCase {
+	/**
+	 * Instance of the Meta_Box class
+	 *
+	 * @var Meta_Box
+	 */
+	public $instance;
+
 	/**
 	 * Setup the tests.
 	 *
@@ -28,20 +34,21 @@ class Test_Meta_Box extends \WP_UnitTestCase {
 		 */
 		wp_set_current_user( 1 );
 		set_current_screen( 'edit.php' );
-		QueueWP::get()->setup->bootstrap->load_admin();
-		QueueWP::get()->setup->bootstrap->init_admin();
+
+		$this->instance = new Meta_Box();
 	}
 
 	/**
 	 * Tests that actions are registered.
 	 *
 	 * @since 0.1
-	 * @covers QueueWP\Admin\Meta_Box::__construct()
+	 * @covers QueueWP\Admin\Meta_Box::init()
 	 */
-	public function test_construct() {
-		$this->assertEquals( 1, has_action( 'add_meta_boxes', array( QueueWP::get()->admin->meta_box, 'create_meta_box' ) ) );
-		$this->assertEquals( 10, has_action( 'admin_enqueue_scripts', array( QueueWP::get()->admin->meta_box, 'meta_box_scripts' ) ) );
-		$this->assertEquals( 10, has_action( 'admin_enqueue_scripts', array( QueueWP::get()->admin->meta_box, 'meta_box_styles' ) ) );
+	public function test_init() {
+		$this->instance->init();
+		$this->assertEquals( 1, has_action( 'add_meta_boxes', array( $this->instance, 'create_meta_box' ) ) );
+		$this->assertEquals( 10, has_action( 'admin_enqueue_scripts', array( $this->instance, 'meta_box_scripts' ) ) );
+		$this->assertEquals( 10, has_action( 'admin_enqueue_scripts', array( $this->instance, 'meta_box_styles' ) ) );
 	}
 
 	/**
@@ -52,7 +59,7 @@ class Test_Meta_Box extends \WP_UnitTestCase {
 	 */
 	public function test_render_meta_box() {
 		ob_start();
-		QueueWP::get()->admin->meta_box->render_meta_box();
+		$this->instance->render_meta_box();
 		$meta_box = ob_get_clean();
 
 		$this->assertContains( '<div id="queuewp-meta-box">', $meta_box );
@@ -65,7 +72,7 @@ class Test_Meta_Box extends \WP_UnitTestCase {
 	 * @covers QueueWP\Admin\Meta_Box::meta_box_scripts()
 	 */
 	public function test_meta_box_scripts() {
-		QueueWP::get()->admin->meta_box->meta_box_scripts();
+		$this->instance->meta_box_scripts();
 		$this->assertTrue( wp_script_is( Meta_Box::META_BOX_STYLE_HANDLE, 'registered' ) );
 		$this->assertTrue( wp_script_is( Meta_Box::META_BOX_STYLE_HANDLE, 'enqueued' ) );
 	}
@@ -77,7 +84,7 @@ class Test_Meta_Box extends \WP_UnitTestCase {
 	 * @covers QueueWP\Admin\Meta_Box::meta_box_styles()
 	 */
 	public function test_meta_box_styles() {
-		QueueWP::get()->admin->meta_box->meta_box_styles();
+		$this->instance->meta_box_styles();
 		$this->assertTrue( wp_style_is( Meta_Box::META_BOX_STYLE_HANDLE, 'registered' ) );
 		$this->assertTrue( wp_style_is( Meta_Box::META_BOX_STYLE_HANDLE, 'enqueued' ) );
 	}

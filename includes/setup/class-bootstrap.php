@@ -11,9 +11,9 @@
 
 namespace QueueWP\Setup;
 
-use QueueWP\QueueWP;
 use QueueWP\Admin\Meta_Box;
 use QueueWP\Utility\Template;
+use QueueWP\Setup\Custom_Post_Types;
 
 /**
  * Class Bootstrap
@@ -54,41 +54,34 @@ class Bootstrap {
 	 */
 	public $utility;
 
+	public function __construct() {
+		$this->setup   = new \stdClass;
+		$this->admin   = new \stdClass;
+		$this->utility = new \stdClass;
+	}
+
 	/**
 	 * Bootstrap constructor.
 	 *
 	 * @since 0.1
 	 */
 	public function init() {
-		$this->setup   = new \stdClass;
-		$this->admin   = new \stdClass;
-		$this->utility = new \stdClass;
-
-		$this->setup_load();
+		/**
+		 * Setup functionality.
+		 */
 		$this->setup_init();
 
 		/**
 		 * Admin related functionality.
 		 */
 		if ( is_admin() ) {
-			$this->load_admin();
-			$this->init_admin();
+			$this->admin_init();
 		}
 
 		/**
 		 * General functionality.
 		 */
-		$this->general_load();
 		$this->general_init();
-	}
-
-	/**
-	 * Loads the classes that setup the base plugin functionality.
-	 *
-	 * @since 0.1
-	 */
-	public function setup_load() {
-		require_once( QueueWP::get()->plugin_dir . 'includes/setup/class-custom-post-types.php' );
 	}
 
 	/**
@@ -102,16 +95,6 @@ class Bootstrap {
 	}
 
 	/**
-	 * Loads the classes that will be used throughout the plugin frontend and WP
-	 * Admin.
-	 *
-	 * @since 0.1
-	 */
-	public function general_load() {
-		require_once( QueueWP::get()->plugin_dir . 'includes/utility/class-template.php' );
-	}
-
-	/**
 	 * Creates objects for the utility functionality we provide.
 	 *
 	 * @since 0.1
@@ -121,55 +104,12 @@ class Bootstrap {
 	}
 
 	/**
-	 * Loads the classes that will be used for the admin based functionality in
-	 * the WP Admin area.
-	 *
-	 * @since 0.1
-	 */
-	public function load_admin() {
-		require_once( QueueWP::get()->plugin_dir . 'includes/admin/class-meta-box.php' );
-	}
-
-	/**
 	 * Creates objects from the classes that we loaded used for the admin
 	 * functionality inside the WP Admin area.
 	 *
 	 * @since 0.1
 	 */
-	public function init_admin() {
+	public function admin_init() {
 		$this->admin->meta_box = new Meta_Box();
-	}
-
-	/**
-	 * Returns an object which includes all the objects we created for the
-	 * initial plugin setup.
-	 *
-	 * @since 0.1
-	 * @return object
-	 */
-	public function get_setup_collection() {
-		return $this->setup;
-	}
-
-	/**
-	 * Returns an object which includes all the objects we created for the admin
-	 * functionality inside the WP Admin area.
-	 *
-	 * @since 0.1
-	 * @return object
-	 */
-	public function get_admin_collection() {
-		return $this->admin;
-	}
-
-	/**
-	 * Returns an object which includes all the objects we created for the
-	 * utility functionality.
-	 *
-	 * @since 0.1
-	 * @return object
-	 */
-	public function get_utility_collection() {
-		return $this->utility;
 	}
 }

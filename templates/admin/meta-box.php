@@ -61,7 +61,7 @@
                     <div class="queuewp-schedule-manual">
                         <div class="queuewp-schedule-item">
                             <fieldset id="timestampdiv">
-                                <?php \QueueWP\QueueWP::get()->utility->template->load( 'admin/parts/timestamp.php' ); ?>
+                                <?php \QueueWP\QueueWP::get()->utility()->template->load( 'admin/parts/timestamp' ); ?>
                             </fieldset>
                         </div>
 

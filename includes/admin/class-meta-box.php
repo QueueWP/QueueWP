@@ -34,7 +34,7 @@ class Meta_Box {
 	 *
 	 * @since 0.1
 	 */
-	public function __construct() {
+	public function init() {
 		add_action( 'add_meta_boxes', array( $this, 'create_meta_box' ), 1 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'meta_box_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'meta_box_styles' ) );
@@ -62,7 +62,7 @@ class Meta_Box {
 	 * @since 0.1
 	 */
 	public function render_meta_box() {
-		QueueWP::get()->utility->template->load( 'admin/meta-box' );
+		QueueWP::get()->utility()->template->load( 'admin/meta-box' );
 	}
 
 	/**

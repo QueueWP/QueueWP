@@ -1,24 +1,30 @@
 <?php
 /**
- * Tests: Load class
+ * Tests: Bootstrap class
  *
- * Tests the functionality in setup/class-load.php
+ * Tests the functionality in setup/class-bootstrap.php
  *
  * @package QueueWP
  * @since 0.1
  */
 
-use QueueWP\QueueWP;
+use QueueWP\Setup\Bootstrap;
 
 /**
- * Class Test_Load
+ * Class Test_Bootstrap
  *
- * Tests for the Load class methods.
+ * Tests for the Bootstrap class methods.
  *
  * @since 0.1
- * @covers QueueWP\Setup\Load
+ * @covers QueueWP\Setup\Bootstrap
  */
-class Test_Load extends \WP_UnitTestCase {
+class Test_Bootstrap extends \WP_UnitTestCase {
+	/**
+	 * Instance of the Bootstrap class
+	 *
+	 * @var Bootstrap
+	 */
+	public $instance;
 
 	/**
 	 * Setup the tests.
@@ -34,69 +40,43 @@ class Test_Load extends \WP_UnitTestCase {
 		 */
 		wp_set_current_user( 1 );
 		set_current_screen( 'edit.php' );
-		QueueWP::get()->setup->bootstrap->load_admin();
-		QueueWP::get()->setup->bootstrap->init_admin();
-	}
 
-	/**
-	 * Tests that classes are loaded.
-	 *
-	 * @since 0.1
-	 * @covers QueueWP\Setup\Load::general_load()
-	 */
-	public function test_general_load() {
-		$this->assertTrue( class_exists( 'QueueWP\Utility\Template' ) );
+		$this->instance = new Bootstrap();
 	}
 
 	/**
 	 * Tests if objects are created.
 	 *
 	 * @since 0.1
-	 * @covers QueueWP\Setup\Load::general_init()
+	 * @covers QueueWP\Setup\Bootstrap::setup_init()
 	 */
-	public function test_general_init() {
-		$this->assertNotEmpty( QueueWP::get()->utility->template );
-		$this->assertInstanceOf( 'QueueWP\Utility\Template', QueueWP::get()->utility->template );
+	public function test_setup_init() {
+		$this->instance->setup_init();
+		$this->assertNotEmpty( $this->instance->setup->custom_post_types );
+		$this->assertInstanceOf( 'QueueWP\Setup\Custom_Post_Types', $this->instance->setup->custom_post_types );
 	}
 
 	/**
-	 * Tests if admin classes are loaded.
+	 * Tests if objects are created.
 	 *
 	 * @since 0.1
-	 * @covers QueueWP\Setup\Load::load_admin()
+	 * @covers QueueWP\Setup\Bootstrap::general_init()
 	 */
-	public function test_load_admin() {
-		$this->assertTrue( class_exists( 'QueueWP\Admin\Meta_Box' ) );
+	public function test_general_init() {
+		$this->instance->general_init();
+		$this->assertNotEmpty( $this->instance->utility->template );
+		$this->assertInstanceOf( 'QueueWP\Utility\Template', $this->instance->utility->template );
 	}
 
 	/**
 	 * Tests if admin objects are created.
 	 *
 	 * @since 0.1
-	 * @covers QueueWP\Setup\Load::init_admin()
+	 * @covers QueueWP\Setup\Bootstrap::admin_init()
 	 */
-	public function test_init_admin() {
-		$this->assertNotEmpty( QueueWP::get()->admin->meta_box );
-		$this->assertInstanceOf( 'QueueWP\Admin\Meta_Box', QueueWP::get()->admin->meta_box );
-	}
-
-	/**
-	 * Tests if the admin collection is returned.
-	 *
-	 * @since 0.1
-	 * @covers QueueWP\Setup\Load::get_admin_collection()
-	 */
-	public function test_get_admin_collection() {
-		$this->assertTrue( is_object( QueueWP::get()->setup->bootstrap->get_admin_collection() ) );
-	}
-
-	/**
-	 * Tests if the utility collection is returned.
-	 *
-	 * @since 0.1
-	 * @covers QueueWP\Setup\Load::get_utility_collection()
-	 */
-	public function test_get_utility_collection() {
-		$this->assertTrue( is_object( QueueWP::get()->setup->bootstrap->get_utility_collection() ) );
+	public function test_admin_init() {
+		$this->instance->admin_init();
+		$this->assertNotEmpty( $this->instance->admin->meta_box );
+		$this->assertInstanceOf( 'QueueWP\Admin\Meta_Box', $this->instance->admin->meta_box );
 	}
 }
