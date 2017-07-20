@@ -8,7 +8,6 @@
  * @since 0.1
  */
 
-use QueueWP\QueueWP;
 use QueueWP\Utility\Template;
 
 /**

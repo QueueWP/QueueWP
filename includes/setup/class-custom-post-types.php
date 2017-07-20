@@ -18,6 +18,13 @@ namespace QueueWP\Setup;
  */
 class Custom_Post_Types {
 	/**
+	 * Name of the Custom Post Type.
+	 *
+	 * @since 0.1
+	 */
+	const POST_TYPE_NAME = 'queuewp';
+
+	/**
 	 * Adds actions to setup the Custom Post Types.
 	 *
 	 * @since 0.1
@@ -75,6 +82,6 @@ class Custom_Post_Types {
 			'supports'           => array( 'title' ),
 		);
 
-		register_post_type( 'queuewp', $args );
+		register_post_type( self::POST_TYPE_NAME, $args );
 	}
 }

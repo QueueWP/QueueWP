@@ -79,7 +79,7 @@ class Test_QueueWP extends WP_UnitTestCase {
 	 * Tests that admin returns an object with admin objects.
 	 *
 	 * @since 0.1
-	 * @covers QueueWP::setup()
+	 * @covers QueueWP::admin()
 	 */
 	public function test_admin() {
 		$this->instance->init();
@@ -92,7 +92,7 @@ class Test_QueueWP extends WP_UnitTestCase {
 	 * Tests that utility returns an object with utility objects.
 	 *
 	 * @since 0.1
-	 * @covers QueueWP::setup()
+	 * @covers QueueWP::utility()
 	 */
 	public function test_utility() {
 		$this->assertTrue( class_exists( 'QueueWP\Setup\Bootstrap' ) );
