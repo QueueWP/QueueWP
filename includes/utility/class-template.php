@@ -22,12 +22,10 @@ use QueueWP\QueueWP;
  */
 class Template {
 	/**
-	 * Load
-	 *
 	 * Loads a template/view.
 	 *
-	 * @param string $template_path Path the the template relative to the
-	 * templates directory.
+	 * @since 0.1
+	 * @param string $template_path Path the the template relative to the templates directory.
 	 */
 	public function load( $template_path ) {
 		$template = QueueWP::get()->plugin_dir . 'templates/' . $template_path . '.php';

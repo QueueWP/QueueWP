@@ -22,6 +22,7 @@ class Test_QueueWP extends WP_UnitTestCase {
 	/**
 	 * Instance of the QueueWP class
 	 *
+	 * @since 0.1
 	 * @var QueueWP
 	 */
 	public $instance;

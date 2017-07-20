@@ -22,6 +22,7 @@ class Test_Template extends \WP_UnitTestCase {
 	/**
 	 * Instance of the Template class
 	 *
+	 * @since 0.1
 	 * @var Template
 	 */
 	public $instance;

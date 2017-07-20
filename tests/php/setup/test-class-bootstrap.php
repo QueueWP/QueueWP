@@ -22,12 +22,15 @@ class Test_Bootstrap extends \WP_UnitTestCase {
 	/**
 	 * Instance of the Bootstrap class
 	 *
+	 * @since 0.1
 	 * @var Bootstrap
 	 */
 	public $instance;
 
 	/**
 	 * Setup the tests.
+	 *
+	 * @since 0.1
 	 */
 	public function setUp() {
 		parent::setUp();

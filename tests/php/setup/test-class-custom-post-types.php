@@ -22,6 +22,7 @@ class Test_Custom_Post_Types extends \WP_UnitTestCase {
 	/**
 	 * Instance of the Custom_Post_Types class
 	 *
+	 * @since 0.1
 	 * @var Custom_Post_Types
 	 */
 	public $instance;

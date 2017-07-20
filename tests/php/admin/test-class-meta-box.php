@@ -14,6 +14,7 @@ class Test_Meta_Box extends \WP_UnitTestCase {
 	/**
 	 * Instance of the Meta_Box class
 	 *
+	 * @since 0.1
 	 * @var Meta_Box
 	 */
 	public $instance;
