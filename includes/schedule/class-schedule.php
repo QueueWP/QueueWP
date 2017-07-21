@@ -32,7 +32,7 @@ class Schedule {
 	 * @return int|\WP_Error
 	 */
 	public function add_to_queue( $parent = 0, $networks = array(), $content, $datetime = '', $images = array(), $url_data = array() ) {
-		if ( empty ( $networks ) ) {
+		if ( empty( $networks ) ) {
 			return new \WP_Error( 'queuewp-error', __( 'A social network must be selected when scheduling a post', 'queuewp' ) );
 		}
 
