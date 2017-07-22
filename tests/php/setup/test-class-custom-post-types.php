@@ -58,5 +58,6 @@ class Test_Custom_Post_Types extends \WP_UnitTestCase {
 	public function test_setup() {
 		$this->instance->setup();
 		$this->assertTrue( post_type_exists( Custom_Post_Types::QUEUE_POST_TYPE_NAME ) );
+		$this->assertTrue( post_type_exists( Custom_Post_Types::ACCOUNTS_POST_TYPE_NAME ) );
 	}
 }
