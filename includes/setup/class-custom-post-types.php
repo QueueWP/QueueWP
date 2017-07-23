@@ -47,7 +47,7 @@ class Custom_Post_Types {
 	 */
 	public function setup() {
 		$labels = array(
-			'name'               => _x( 'QueueWP', 'post type general name', 'queuewp' ),
+			'name'               => _x( 'Queue', 'post type general name', 'queuewp' ),
 			'singular_name'      => _x( 'Post', 'post type singular name', 'queuewp' ),
 			'menu_name'          => _x( 'QueueWP', 'admin menu', 'queuewp' ),
 			'name_admin_bar'     => _x( 'QueueWP', 'add new on admin bar', 'queuewp' ),
