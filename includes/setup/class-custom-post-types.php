@@ -41,7 +41,7 @@ class Custom_Post_Types {
 	}
 
 	/**
-	 * Creates the Custom Post Type
+	 * Creates the Custom Post Types.
 	 *
 	 * @since 0.1
 	 */
@@ -116,18 +116,6 @@ class Custom_Post_Types {
 			'show_ui'            => true,
 			'show_in_menu'       => 'edit.php?post_type=' . self::QUEUE_POST_TYPE_NAME,
 			'query_var'          => false,
-			'capability_type'    => 'post',
-			'capabilities'       => array(
-				'edit_post'          => 'edit_post',
-				'read_post'          => 'read_post',
-				'delete_post'        => 'delete_post',
-				'edit_posts'         => 'edit_posts',
-				'edit_others_posts'  => 'edit_posts',
-				'publish_posts'      => 'publish_post',
-				'read_private_posts' => 'read_posts',
-				'create_posts'       => 'edit_posts',
-			),
-			'map_meta_cap'       => false,
 			'has_archive'        => false,
 			'hierarchical'       => false,
 			'menu_position'      => null,

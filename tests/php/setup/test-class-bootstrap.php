@@ -82,4 +82,18 @@ class Test_Bootstrap extends \WP_UnitTestCase {
 		$this->assertNotEmpty( $this->instance->admin->meta_box );
 		$this->assertInstanceOf( 'QueueWP\Admin\Meta_Box', $this->instance->admin->meta_box );
 	}
+
+	/**
+	 * Tests if accounts objects are created.
+	 *
+	 * @since 0.1
+	 * @covers QueueWP\Setup\Bootstrap::accounts_init()
+	 */
+	public function test_accounts_init() {
+		$this->instance->accounts_init();
+		$this->assertNotEmpty( $this->instance->accounts->accounts );
+		$this->assertInstanceOf( 'QueueWP\Accounts\Accounts', $this->instance->accounts->accounts );
+		$this->assertInstanceOf( 'QueueWP\Accounts\Facebook', $this->instance->accounts->facebook );
+		$this->assertInstanceOf( 'QueueWP\Accounts\Twitter', $this->instance->accounts->twitter );
+	}
 }

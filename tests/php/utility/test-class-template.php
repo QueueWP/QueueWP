@@ -51,4 +51,18 @@ class Test_Template extends \WP_UnitTestCase {
 
 		$this->assertContains( '<div id="queuewp-meta-box">', $template );
 	}
+
+	/**
+	 * Make sure that data gets passed through to a template.
+	 *
+	 * @since 0.1
+	 * @covers QueueWP\Utility\Template::load()
+	 */
+	public function test_load_data() {
+		ob_start();
+		$this->instance->load( 'accounts/choose', array( 'accounts' => array( 'twitter' => 'Twitter' ) ) );
+		$template = ob_get_clean();
+
+		$this->assertContains( '<option value="twitter">Twitter</option>', $template );
+	}
 }

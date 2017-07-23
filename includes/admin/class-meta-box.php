@@ -21,7 +21,6 @@ use QueueWP\QueueWP;
  * @since 0.1
  */
 class Meta_Box {
-
 	/**
 	 * The handle used to register and enqueue scripts for the metabox.
 	 *
@@ -36,8 +35,6 @@ class Meta_Box {
 	 */
 	public function init() {
 		add_action( 'add_meta_boxes', array( $this, 'create_meta_box' ), 1 );
-		add_action( 'admin_enqueue_scripts', array( $this, 'meta_box_scripts' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'meta_box_styles' ) );
 	}
 
 	/**
@@ -46,14 +43,21 @@ class Meta_Box {
 	 * @since 0.1
 	 */
 	public function create_meta_box() {
-		add_meta_box(
-			'queuewp',
-			__( 'QueueWP', 'queuewp' ),
-			array( $this, 'render_meta_box' ),
-			'',
-			'normal',
-			'high'
-		);
+		$screen = get_current_screen();
+
+		if ( ! empty( $screen ) && ( 'post' === $screen->post_type || 'page' === $screen->post_type ) ) {
+			add_meta_box(
+				'queuewp',
+				__( 'QueueWP', 'queuewp' ),
+				array( $this, 'render_meta_box' ),
+				'',
+				'normal',
+				'high'
+			);
+
+			add_action( 'admin_enqueue_scripts', array( $this, 'meta_box_scripts' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'meta_box_styles' ) );
+		}
 	}
 
 	/**

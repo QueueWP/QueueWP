@@ -11,6 +11,9 @@
 
 namespace QueueWP\Setup;
 
+use QueueWP\Accounts\Accounts;
+use QueueWP\Accounts\Facebook;
+use QueueWP\Accounts\Twitter;
 use QueueWP\Admin\Meta_Box;
 use QueueWP\Utility\Template;
 use QueueWP\Setup\Custom_Post_Types;
@@ -45,6 +48,16 @@ class Bootstrap {
 	public $admin;
 
 	/**
+	 * Accounts
+	 *
+	 * Class containing accounts functionality objects.
+	 *
+	 * @since 0.1
+	 * @var object
+	 */
+	public $accounts;
+
+	/**
 	 * Utility
 	 *
 	 * Class containing utility functionality objects.
@@ -54,14 +67,20 @@ class Bootstrap {
 	 */
 	public $utility;
 
+	/**
+	 * Bootstrap constructor.
+	 *
+	 * @since 0.1
+	 */
 	public function __construct() {
-		$this->setup   = new \stdClass;
-		$this->admin   = new \stdClass;
-		$this->utility = new \stdClass;
+		$this->setup    = new \stdClass;
+		$this->admin    = new \stdClass;
+		$this->accounts = new \stdClass;
+		$this->utility  = new \stdClass;
 	}
 
 	/**
-	 * Bootstrap constructor.
+	 * Init.
 	 *
 	 * @since 0.1
 	 */
@@ -82,6 +101,11 @@ class Bootstrap {
 		 * General functionality.
 		 */
 		$this->general_init();
+
+		/**
+		 * Accounts functionality.
+		 */
+		$this->accounts_init();
 	}
 
 	/**
@@ -112,5 +136,22 @@ class Bootstrap {
 	public function admin_init() {
 		$this->admin->meta_box = new Meta_Box();
 		$this->admin->meta_box->init();
+	}
+
+	/**
+	 * Creates objects from the classes that we loaded used for the accounts
+	 * functionality inside the WP Admin area.
+	 *
+	 * @since 0.1
+	 */
+	public function accounts_init() {
+		$this->accounts->accounts = new Accounts();
+		$this->accounts->accounts->init();
+
+		$this->accounts->facebook = new Facebook();
+		$this->accounts->facebook->init();
+
+		$this->accounts->twitter = new Twitter();
+		$this->accounts->twitter->init();
 	}
 }

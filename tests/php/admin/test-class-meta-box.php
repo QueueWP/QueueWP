@@ -48,6 +48,16 @@ class Test_Meta_Box extends \WP_UnitTestCase {
 	public function test_init() {
 		$this->instance->init();
 		$this->assertEquals( 1, has_action( 'add_meta_boxes', array( $this->instance, 'create_meta_box' ) ) );
+	}
+
+	/**
+	 * Tests that create meta box enqueues scripts.
+	 *
+	 * @since 0.1
+	 * @covers QueueWP\Admin\Meta_Box::create_meta_box()
+	 */
+	public function test_create_meta_box() {
+		$this->instance->create_meta_box();
 		$this->assertEquals( 10, has_action( 'admin_enqueue_scripts', array( $this->instance, 'meta_box_scripts' ) ) );
 		$this->assertEquals( 10, has_action( 'admin_enqueue_scripts', array( $this->instance, 'meta_box_styles' ) ) );
 	}
