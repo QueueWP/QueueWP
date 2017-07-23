@@ -14,7 +14,8 @@ namespace QueueWP\Setup;
 use QueueWP\Accounts\Accounts;
 use QueueWP\Accounts\Facebook;
 use QueueWP\Accounts\Twitter;
-use QueueWP\Admin\Meta_Box;
+use QueueWP\Schedule\Schedule;
+use QueueWP\Schedule\Scheduler;
 use QueueWP\Utility\Template;
 use QueueWP\Setup\Custom_Post_Types;
 
@@ -28,8 +29,6 @@ use QueueWP\Setup\Custom_Post_Types;
  */
 class Bootstrap {
 	/**
-	 * Setup
-	 *
 	 * Class containing setup functionality objects.
 	 *
 	 * @since 0.1
@@ -38,28 +37,6 @@ class Bootstrap {
 	public $setup;
 
 	/**
-	 * Admin
-	 *
-	 * Class containing admin functionality objects.
-	 *
-	 * @since 0.1
-	 * @var object
-	 */
-	public $admin;
-
-	/**
-	 * Accounts
-	 *
-	 * Class containing accounts functionality objects.
-	 *
-	 * @since 0.1
-	 * @var object
-	 */
-	public $accounts;
-
-	/**
-	 * Utility
-	 *
 	 * Class containing utility functionality objects.
 	 *
 	 * @since 0.1
@@ -68,15 +45,31 @@ class Bootstrap {
 	public $utility;
 
 	/**
+	 * Class containing accounts functionality objects.
+	 *
+	 * @since 0.1
+	 * @var object
+	 */
+	public $accounts;
+
+	/**
+	 * Class containing schedule functionality objects.
+	 *
+	 * @since 0.1
+	 * @var object
+	 */
+	public $schedule;
+
+	/**
 	 * Bootstrap constructor.
 	 *
 	 * @since 0.1
 	 */
 	public function __construct() {
 		$this->setup    = new \stdClass;
-		$this->admin    = new \stdClass;
-		$this->accounts = new \stdClass;
 		$this->utility  = new \stdClass;
+		$this->accounts = new \stdClass;
+		$this->schedule = new \stdClass;
 	}
 
 	/**
@@ -91,21 +84,23 @@ class Bootstrap {
 		$this->setup_init();
 
 		/**
-		 * Admin related functionality.
+		 * Utility functionality.
 		 */
-		if ( is_admin() ) {
-			$this->admin_init();
-		}
-
-		/**
-		 * General functionality.
-		 */
-		$this->general_init();
+		$this->utility_init();
 
 		/**
 		 * Accounts functionality.
 		 */
-		$this->accounts_init();
+		if ( is_admin() ) {
+			$this->accounts_init();
+		}
+
+		/**
+		 * Schedule related functionality.
+		 */
+		if ( is_admin() ) {
+			$this->schedule_init();
+		}
 	}
 
 	/**
@@ -123,19 +118,8 @@ class Bootstrap {
 	 *
 	 * @since 0.1
 	 */
-	public function general_init() {
+	public function utility_init() {
 		$this->utility->template = new Template();
-	}
-
-	/**
-	 * Creates objects from the classes that we loaded used for the admin
-	 * functionality inside the WP Admin area.
-	 *
-	 * @since 0.1
-	 */
-	public function admin_init() {
-		$this->admin->meta_box = new Meta_Box();
-		$this->admin->meta_box->init();
 	}
 
 	/**
@@ -153,5 +137,18 @@ class Bootstrap {
 
 		$this->accounts->twitter = new Twitter();
 		$this->accounts->twitter->init();
+	}
+
+	/**
+	 * Creates objects from the classes that we loaded used for the schedule
+	 * functionality inside the WP Admin area.
+	 *
+	 * @since 0.1
+	 */
+	public function schedule_init() {
+		$this->schedule->schedule = new Schedule();
+		$this->schedule->schedule->init();
+
+		$this->schedule->scheduler = new Scheduler();
 	}
 }

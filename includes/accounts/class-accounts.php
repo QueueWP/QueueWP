@@ -63,7 +63,7 @@ class Accounts {
 	 */
 	public function render_meta_box() {
 		$accounts = $this->get_accounts();
-		QueueWP::get()->utility()->template->load( 'accounts/choose', array( 'accounts' => $accounts ) );
+		QueueWP::get()->utility()->template->load( 'accounts/meta-box', array( 'accounts' => $accounts ) );
 	}
 
 	/**

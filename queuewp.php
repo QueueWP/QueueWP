@@ -112,13 +112,13 @@ class QueueWP {
 	}
 
 	/**
-	 * Returns the admin objects created by Bootstrap.
+	 * Returns the schedule objects created by Bootstrap.
 	 *
 	 * @since 0.1
 	 * @return \stdClass
 	 */
-	public function admin() {
-		return $this->bootstrap->admin;
+	public function schedule() {
+		return $this->bootstrap->schedule;
 	}
 
 	/**

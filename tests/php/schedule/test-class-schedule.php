@@ -1,6 +1,6 @@
 <?php
 /**
- * Tests: Schedule class
+ * Tests: Schedule
  *
  * Tests the functionality in schedule/class-schedule.php
  *
@@ -10,14 +10,6 @@
 
 use QueueWP\Schedule\Schedule;
 
-/**
- * Class Schedule
- *
- * Tests for the Schedule class methods.
- *
- * @since 0.1
- * @covers QueueWP\Schedule\Schedule
- */
 class Test_Schedule extends \WP_UnitTestCase {
 	/**
 	 * Instance of the Schedule class
@@ -35,51 +27,76 @@ class Test_Schedule extends \WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 
+		/**
+		 * Fake that we're in the WordPress admin area.
+		 *
+		 * Rerun the setup since for this test, we want to load the files as if
+		 * we're in the admin area.
+		 */
+		wp_set_current_user( 1 );
+		set_current_screen( 'edit.php' );
+
 		$this->instance = new Schedule();
 	}
 
 	/**
-	 * Test that a new schedule post gets added.
+	 * Tests that actions are registered.
 	 *
 	 * @since 0.1
-	 * @covers QueueWP\Schedule\Schedule::add_to_queue()
+	 * @covers QueueWP\Schedule\Schedule::init()
 	 */
-	public function test_add_to_queue() {
-		// Create a post.
-		$post_id = $this->factory()->post->create( array(
-			'post_title' => 'Test Post',
-		) );
+	public function test_init() {
+		$this->instance->init();
+		$this->assertEquals( 1, has_action( 'add_meta_boxes', array( $this->instance, 'create_meta_box' ) ) );
+	}
 
-		// @todo: implement these when networks are added.
-		$networks = array( 1 );
+	/**
+	 * Tests that create meta box enqueues scripts.
+	 *
+	 * @since 0.1
+	 * @covers QueueWP\Schedule\Schedule::create_meta_box()
+	 */
+	public function test_create_meta_box() {
+		$this->instance->create_meta_box();
+		$this->assertEquals( 10, has_action( 'admin_enqueue_scripts', array( $this->instance, 'meta_box_scripts' ) ) );
+		$this->assertEquals( 10, has_action( 'admin_enqueue_scripts', array( $this->instance, 'meta_box_styles' ) ) );
+	}
 
-		// No network.
-		$result = $this->instance->add_to_queue( $post_id, array(), 'Test tweet' );
-		$this->assertTrue( is_wp_error( $result ) );
-		$this->assertEquals( 'queuewp-error', $result->get_error_code() );
-		$this->assertEquals( 'A social network must be selected when scheduling a post', $result->get_error_message() );
+	/**
+	 * Tests that content is rendered to a meta box.
+	 *
+	 * @since 0.1
+	 * @covers QueueWP\Schedule\Schedule::render_meta_box()
+	 */
+	public function test_render_meta_box() {
+		ob_start();
+		$this->instance->render_meta_box();
+		$meta_box = ob_get_clean();
 
-		// No content.
-		$result = $this->instance->add_to_queue( $post_id, $networks, '' );
-		$this->assertTrue( is_wp_error( $result ) );
-		$this->assertEquals( 'queuewp-error', $result->get_error_code() );
-		$this->assertEquals( 'Unable to schedule post without content defined', $result->get_error_message() );
+		$this->assertContains( '<div id="queuewp-meta-box">', $meta_box );
+	}
 
-		// Date in the past.
-		$datetime = date( 'Y-m-d H:i:s', time() - 100 );
-		$result = $this->instance->add_to_queue( $post_id, $networks, 'Test tweet', $datetime );
-		$this->assertTrue( is_wp_error( $result ) );
-		$this->assertEquals( 'queuewp-error', $result->get_error_code() );
-		$this->assertEquals( 'Cannot schedule a post in the past', $result->get_error_message() );
+	/**
+	 * Tests that the admin scripts are loaded.
+	 *
+	 * @since 0.1
+	 * @covers QueueWP\Schedule\Schedule::meta_box_scripts()
+	 */
+	public function test_meta_box_scripts() {
+		$this->instance->meta_box_scripts();
+		$this->assertTrue( wp_script_is( Schedule::META_BOX_STYLE_HANDLE, 'registered' ) );
+		$this->assertTrue( wp_script_is( Schedule::META_BOX_STYLE_HANDLE, 'enqueued' ) );
+	}
 
-		// Legit post.
-		$datetime = date( 'Y-m-d H:i:s', time() );
-		$result = $this->instance->add_to_queue( $post_id, $networks, 'Test tweet', $datetime );
-		$post = get_post( $result );
-		$this->assertEquals( \QueueWP\Setup\Custom_Post_Types::QUEUE_POST_TYPE_NAME, $post->post_type );
-		$this->assertEquals( 'Test tweet', $post->post_content );
-		$this->assertEquals( $datetime, $post->post_date );
-		$this->assertEquals( $post_id, get_post_meta( $result, 'parent', true ) );
-		$this->assertEquals( $networks, get_post_meta( $result, 'networks', true ) );
+	/**
+	 * Tests that the admin styles are loaded.
+	 *
+	 * @since 0.1
+	 * @covers QueueWP\Schedule\Schedule::meta_box_styles()
+	 */
+	public function test_meta_box_styles() {
+		$this->instance->meta_box_styles();
+		$this->assertTrue( wp_style_is( Schedule::META_BOX_STYLE_HANDLE, 'registered' ) );
+		$this->assertTrue( wp_style_is( Schedule::META_BOX_STYLE_HANDLE, 'enqueued' ) );
 	}
 }

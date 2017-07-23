@@ -1,74 +1,97 @@
 <?php
 /**
- * Setup: Schedule class
+ * Schedule: Schedule class
  *
- * Handles scheduling of posts to social networks.
+ * All the functionality for the schedule meta box for the plugin.
  *
- * @package QueueWP
+ * @package QueueWP\Schedule
  * @since 0.1
  */
 
 namespace QueueWP\Schedule;
 
-use QueueWP\Setup\Custom_Post_Types;
+use QueueWP\QueueWP;
 
 /**
  * Class Schedule
  *
- * @package QueueWP
+ * @package QueueWP\Schedule
  * @since 0.1
  */
 class Schedule {
 	/**
-	 * Adds a post to the queue to be sent to social networks.
+	 * The handle used to register and enqueue scripts for the metabox.
 	 *
-	 * @since 2.1
-	 * @param int    $parent   The ID of the parent post (the post to be sent to social).
-	 * @param array  $networks Array of networks where the post should be sent to.
-	 * @param string $content  The content to be shared.
-	 * @param string $datetime The datetime when this post should be sent out.
-	 * @param array  $images   Array of images to be shared.
-	 * @param array  $url_data Array of data for the URL being shared.
-	 * @return int|\WP_Error
+	 * @since 0.1
 	 */
-	public function add_to_queue( $parent = 0, $networks = array(), $content, $datetime = '', $images = array(), $url_data = array() ) {
-		if ( empty( $networks ) ) {
-			return new \WP_Error( 'queuewp-error', __( 'A social network must be selected when scheduling a post', 'queuewp' ) );
+	const META_BOX_STYLE_HANDLE = 'queuewp_meta_box_admin_css';
+
+	/**
+	 * Meta_Box constructor.
+	 *
+	 * @since 0.1
+	 */
+	public function init() {
+		add_action( 'add_meta_boxes', array( $this, 'create_meta_box' ), 1 );
+	}
+
+	/**
+	 * Actually creates the metabox for scheduling social posts.
+	 *
+	 * @since 0.1
+	 */
+	public function create_meta_box() {
+		$screen = get_current_screen();
+
+		if ( ! empty( $screen ) && ( 'post' === $screen->post_type || 'page' === $screen->post_type ) ) {
+			add_meta_box(
+				'queuewp',
+				__( 'QueueWP', 'queuewp' ),
+				array( $this, 'render_meta_box' ),
+				'',
+				'normal',
+				'high'
+			);
+
+			add_action( 'admin_enqueue_scripts', array( $this, 'meta_box_scripts' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'meta_box_styles' ) );
 		}
+	}
 
-		if ( empty( $content ) ) {
-			return new \WP_Error( 'queuewp-error', __( 'Unable to schedule post without content defined', 'queuewp' ) );
-		}
+	/**
+	 * Renders the content of the meta box by loading the template.
+	 *
+	 * @since 0.1
+	 */
+	public function render_meta_box() {
+		QueueWP::get()->utility()->template->load( 'schedule/meta-box' );
+	}
 
-		if ( empty( $datetime ) ) {
-			$datetime = date( 'Y-m-d H:i:s' );
-		}
-
-		/*
-		 * Make sure a post is not scheduled to go out in the past. We add 5
-		 * seconds for slow servers ;)
-		 */
-		if ( strtotime( $datetime ) + 5 < time() ) {
-			return new \WP_Error( 'queuewp-error', __( 'Cannot schedule a post in the past', 'queuewp' ) );
-		}
-
-		// @todo: Add images to media gallery if not added already.
-
-		$result = wp_insert_post(
-			array(
-				'post_type'    => Custom_Post_Types::QUEUE_POST_TYPE_NAME,
-				'post_content' => $content,
-				'post_date'    => $datetime,
-				'meta_input'   => array(
-					'parent'   => $parent,
-					'networks' => $networks,
-					'url_data' => $url_data,
-				),
-			)
+	/**
+	 * Loads the Javascript functionality to the admin area for a meta box.
+	 *
+	 * @since 0.1
+	 */
+	public function meta_box_scripts() {
+		wp_register_script(
+			self::META_BOX_STYLE_HANDLE,
+			QueueWP::get()->plugin_url . 'assets/js/admin/meta-box.js',
+			array( 'jquery', 'utils', 'wp-util' ),
+			'0.1',
+			true
 		);
 
-		// @todo: Do we need to kick off the job already?
+		wp_add_inline_script( self::META_BOX_STYLE_HANDLE, 'queueWPMetaBox.init();', 'after' );
+		wp_enqueue_script( self::META_BOX_STYLE_HANDLE );
+	}
 
-		return $result;
+	/**
+	 * Adds styles to the admin area for the QueueWP meta box.
+	 *
+	 * @since 0.1
+	 */
+	public function meta_box_styles() {
+		wp_register_style( self::META_BOX_STYLE_HANDLE, QueueWP::get()->plugin_url . 'assets/css/admin/meta-box.css', false, '0.1' );
+		wp_enqueue_style( self::META_BOX_STYLE_HANDLE );
 	}
 }

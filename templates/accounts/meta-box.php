@@ -4,7 +4,7 @@
 		<option>-- Select --</option>
 		<?php if ( ! empty( $data['accounts'] ) ) : ?>
 			<?php foreach ( $data['accounts'] as $id => $account ) : ?>
-			<option value="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $account ); ?></option>
+				<option value="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $account ); ?></option>
 			<?php endforeach; ?>
 		<?php endif; ?>
 	</select>

@@ -63,10 +63,10 @@ class Test_Bootstrap extends \WP_UnitTestCase {
 	 * Tests if objects are created.
 	 *
 	 * @since 0.1
-	 * @covers QueueWP\Setup\Bootstrap::general_init()
+	 * @covers QueueWP\Setup\Bootstrap::utility_init()
 	 */
-	public function test_general_init() {
-		$this->instance->general_init();
+	public function test_utility_init() {
+		$this->instance->utility_init();
 		$this->assertNotEmpty( $this->instance->utility->template );
 		$this->assertInstanceOf( 'QueueWP\Utility\Template', $this->instance->utility->template );
 	}
@@ -75,12 +75,12 @@ class Test_Bootstrap extends \WP_UnitTestCase {
 	 * Tests if admin objects are created.
 	 *
 	 * @since 0.1
-	 * @covers QueueWP\Setup\Bootstrap::admin_init()
+	 * @covers QueueWP\Setup\Bootstrap::schedule_init()
 	 */
-	public function test_admin_init() {
-		$this->instance->admin_init();
-		$this->assertNotEmpty( $this->instance->admin->meta_box );
-		$this->assertInstanceOf( 'QueueWP\Admin\Meta_Box', $this->instance->admin->meta_box );
+	public function test_schedule_init() {
+		$this->instance->schedule_init();
+		$this->assertNotEmpty( $this->instance->schedule->schedule );
+		$this->assertInstanceOf( 'QueueWP\Schedule\Schedule', $this->instance->schedule->schedule );
 	}
 
 	/**

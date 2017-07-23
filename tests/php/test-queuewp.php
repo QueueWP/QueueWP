@@ -77,16 +77,16 @@ class Test_QueueWP extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Tests that admin returns an object with admin objects.
+	 * Tests that admin returns an object with schedule objects.
 	 *
 	 * @since 0.1
-	 * @covers QueueWP::admin()
+	 * @covers QueueWP::schedule()
 	 */
-	public function test_admin() {
+	public function test_schedule() {
 		$this->instance->init();
 		$this->assertTrue( class_exists( 'QueueWP\Setup\Bootstrap' ) );
-		$this->assertInstanceOf( '\stdClass', $this->instance->admin() );
-		$this->assertInstanceOf( 'QueueWP\Admin\Meta_Box', $this->instance->admin()->meta_box );
+		$this->assertInstanceOf( '\stdClass', $this->instance->schedule() );
+		$this->assertInstanceOf( 'QueueWP\Schedule\Schedule', $this->instance->schedule()->schedule );
 	}
 
 	/**
@@ -109,6 +109,6 @@ class Test_QueueWP extends WP_UnitTestCase {
 	 */
 	public function test_autoload() {
 		$this->assertTrue( class_exists( 'QueueWP\Utility\Template' ) );
-		$this->assertTrue( class_exists( 'QueueWP\Admin\Meta_Box' ) );
+		$this->assertTrue( class_exists( 'QueueWP\Schedule\Schedule' ) );
 	}
 }
