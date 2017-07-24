@@ -130,6 +130,16 @@ class QueueWP {
 	public function utility() {
 		return $this->bootstrap->utility;
 	}
+
+	/**
+	 * Returns the accounts objects created by Bootstrap.
+	 *
+	 * @since 0.1
+	 * @return \stdClass
+	 */
+	public function accounts() {
+		return $this->bootstrap->accounts;
+	}
 }
 
 /**

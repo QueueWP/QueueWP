@@ -17,6 +17,8 @@ namespace QueueWP\Accounts;
  * @since 0.1
  */
 class Twitter {
+	const ACCOUNT_KEY = 'twitter';
+
 	/**
 	 * Init.
 	 *

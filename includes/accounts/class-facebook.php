@@ -10,6 +10,8 @@
 
 namespace QueueWP\Accounts;
 
+use QueueWP\QueueWP;
+
 /**
  * Class Facebook
  *
@@ -17,6 +19,8 @@ namespace QueueWP\Accounts;
  * @since 0.1
  */
 class Facebook {
+	const ACCOUNT_KEY = 'facebook';
+
 	/**
 	 * Init.
 	 *
@@ -32,7 +36,16 @@ class Facebook {
 	 * @since 0.1
 	 */
 	public function register_account( $accounts ) {
-		$accounts['facebook'] = __( 'Facebook', 'queuewp' );
+		$accounts[ self::ACCOUNT_KEY ] = __( 'Facebook', 'queuewp' );
 		return $accounts;
+	}
+
+	public function render_settings() {
+		$token = '';
+
+		if ( empty( $token ) ) {
+			QueueWP::get()->utility()->template->load( 'accounts/facebook-connect' );
+			die();
+		}
 	}
 }

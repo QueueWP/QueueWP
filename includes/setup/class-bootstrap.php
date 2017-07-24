@@ -132,11 +132,13 @@ class Bootstrap {
 		$this->accounts->accounts = new Accounts();
 		$this->accounts->accounts->init();
 
-		$this->accounts->facebook = new Facebook();
-		$this->accounts->facebook->init();
+		// Clients.
+		$this->accounts->clients[ Facebook::ACCOUNT_KEY ] = new Facebook();
+		$this->accounts->clients[ Twitter::ACCOUNT_KEY ] = new Twitter();
 
-		$this->accounts->twitter = new Twitter();
-		$this->accounts->twitter->init();
+		// Init clients.
+		$this->accounts->clients[ Facebook::ACCOUNT_KEY ]->init();
+		$this->accounts->clients[ Twitter::ACCOUNT_KEY ]->init();
 	}
 
 	/**
