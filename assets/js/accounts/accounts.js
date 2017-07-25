@@ -31,10 +31,5 @@ var queueWPAccounts = ( function( $ ) {
 		} );
 	};
 
-	component.renderSettings = function( data ) {
-		console.log(data);
-		$( '#queuewp-account-settings' ).html( data );
-	};
-
 	return component;
 } )( jQuery );
