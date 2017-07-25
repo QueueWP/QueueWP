@@ -17,7 +17,7 @@ var queueWPAccounts = ( function( $ ) {
 
 	component.init = function() {
 		elAccountsSelect.on( 'change', '.account_type', function( e ) {
-			var request = wp.ajax.post(
+			var result = wp.ajax.post(
 				component.action,
 				{
 					nonce: component.nonce,
@@ -25,8 +25,7 @@ var queueWPAccounts = ( function( $ ) {
 				}
 			);
 
-			request.done( function( data ) {
-				console.log(data);
+			result.always( function( data ) {
 				$( '#queuewp-account-settings' ).html( data );
 			} );
 		} );

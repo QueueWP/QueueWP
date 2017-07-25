@@ -19,6 +19,11 @@ use QueueWP\QueueWP;
  * @since 0.1
  */
 class Facebook {
+	/**
+	 * The key of the client.
+	 *
+	 * @since 0.1
+	 */
 	const ACCOUNT_KEY = 'facebook';
 
 	/**
@@ -40,12 +45,16 @@ class Facebook {
 		return $accounts;
 	}
 
+	/**
+	 * Render the account connection form.
+	 *
+	 * @since 0.1
+	 */
 	public function render_settings() {
 		$token = '';
 
 		if ( empty( $token ) ) {
 			QueueWP::get()->utility()->template->load( 'accounts/facebook-connect' );
-			die();
 		}
 	}
 }

@@ -21,15 +21,32 @@ use QueueWP\Setup\Custom_Post_Types;
  */
 class Accounts {
 	/**
+	 * The Ajax action for fetching the accounts form.
+	 *
+	 * @since 0.1
+	 */
+	const AJAX_ACTION = 'queuewp_account_settings';
+
+	/**
 	 * The handle used to register and enqueue scripts for the accounts scripts.
 	 *
 	 * @since 0.1
 	 */
 	const JS_HANDLE = 'queuewp_accounts_js';
 
-	const NONCE_ACTION = 'queuewp_accounts_nonce';
+	/**
+	 * Identifier of the meta box.
+	 *
+	 * @since 0.1
+	 */
+	const META_BOX_NAME = 'queuewp_accounts';
 
-	const AJAX_ACTION = 'queuewp_account_settings';
+	/**
+	 * Nonce for the accounts form.
+	 *
+	 * @since 0.1
+	 */
+	const NONCE_ACTION = 'queuewp_accounts_nonce';
 
 	/**
 	 * Init.
@@ -52,7 +69,7 @@ class Accounts {
 
 		if ( ! empty( $screen ) && ( Custom_Post_Types::ACCOUNTS_POST_TYPE_NAME === $screen->post_type ) ) {
 			add_meta_box(
-				'queuewp_accounts',
+				self::META_BOX_NAME,
 				__( 'Link Account', 'queuewp' ),
 				array( $this, 'render_meta_box' ),
 				'',
@@ -73,7 +90,9 @@ class Accounts {
 	}
 
 	/**
-	 * Loads the Javascript functionality to the admin area for a meta box.
+	 * Loads the Javascript functionality for the accounts page. These scripts
+	 * are used when linking a new account, we use Ajax to fetch in an account
+	 * form from the client.
 	 *
 	 * @since 0.1
 	 */
@@ -107,6 +126,13 @@ class Accounts {
 		wp_enqueue_script( self::JS_HANDLE );
 	}
 
+	/**
+	 * Ajax call back which gets an identifier for the type of account selected
+	 * from the front end, then finds the client for that identifier and outputs
+	 * the form to link the account which gets sent back via Ajax.
+	 *
+	 * @since 0.1
+	 */
 	public function render_account_settings() {
 		if ( empty( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), self::NONCE_ACTION ) ) {
 			return;
@@ -117,6 +143,10 @@ class Accounts {
 
 		if ( array_key_exists( $account, $clients ) && method_exists( $clients[ $account ], 'render_settings' ) ) {
 			$clients[ $account ]->render_settings();
+		}
+
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+			wp_die();
 		}
 	}
 

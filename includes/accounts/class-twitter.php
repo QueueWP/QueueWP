@@ -17,6 +17,11 @@ namespace QueueWP\Accounts;
  * @since 0.1
  */
 class Twitter {
+	/**
+	 * The key of the client.
+	 *
+	 * @since 0.1
+	 */
 	const ACCOUNT_KEY = 'twitter';
 
 	/**
