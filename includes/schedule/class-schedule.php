@@ -75,7 +75,7 @@ class Schedule {
 	public function meta_box_scripts() {
 		wp_register_script(
 			self::META_BOX_STYLE_HANDLE,
-			QueueWP::get()->plugin_url . 'assets/js/admin/meta-box.js',
+			QueueWP::get()->plugin_url . 'assets/js/schedule/meta-box.js',
 			array( 'jquery', 'utils', 'wp-util' ),
 			'0.1',
 			true
@@ -91,7 +91,7 @@ class Schedule {
 	 * @since 0.1
 	 */
 	public function meta_box_styles() {
-		wp_register_style( self::META_BOX_STYLE_HANDLE, QueueWP::get()->plugin_url . 'assets/css/admin/meta-box.css', false, '0.1' );
+		wp_register_style( self::META_BOX_STYLE_HANDLE, QueueWP::get()->plugin_url . 'assets/css/schedule/meta-box.css', false, '0.1' );
 		wp_enqueue_style( self::META_BOX_STYLE_HANDLE );
 	}
 }
