@@ -16,6 +16,7 @@ use QueueWP\Accounts\Facebook;
 use QueueWP\Accounts\Twitter;
 use QueueWP\Schedule\Schedule;
 use QueueWP\Schedule\Scheduler;
+use QueueWP\Settings\Settings;
 use QueueWP\Utility\Template;
 use QueueWP\Setup\Custom_Post_Types;
 
@@ -45,6 +46,14 @@ class Bootstrap {
 	public $utility;
 
 	/**
+	 * Class containing settings functionality objects.
+	 *
+	 * @since 0.1
+	 * @var object
+	 */
+	public $settings;
+
+	/**
 	 * Class containing accounts functionality objects.
 	 *
 	 * @since 0.1
@@ -68,6 +77,7 @@ class Bootstrap {
 	public function __construct() {
 		$this->setup    = new \stdClass;
 		$this->utility  = new \stdClass;
+		$this->settings = new \stdClass;
 		$this->accounts = new \stdClass;
 		$this->schedule = new \stdClass;
 	}
@@ -87,6 +97,13 @@ class Bootstrap {
 		 * Utility functionality.
 		 */
 		$this->utility_init();
+
+		/**
+		 * Settings functionality.
+		 */
+		if ( is_admin() ) {
+			$this->settings_init();
+		}
 
 		/**
 		 * Accounts functionality.
@@ -123,6 +140,16 @@ class Bootstrap {
 	}
 
 	/**
+	 * Creates objects for the settings functionality we provide.
+	 *
+	 * @since 0.1
+	 */
+	public function settings_init() {
+		$this->settings->settings = new Settings();
+		$this->settings->settings->init();
+	}
+
+	/**
 	 * Creates objects from the classes that we loaded used for the accounts
 	 * functionality inside the WP Admin area.
 	 *
@@ -132,11 +159,13 @@ class Bootstrap {
 		$this->accounts->accounts = new Accounts();
 		$this->accounts->accounts->init();
 
-		$this->accounts->facebook = new Facebook();
-		$this->accounts->facebook->init();
+		// Clients.
+		$this->accounts->clients[ Facebook::ACCOUNT_KEY ] = new Facebook();
+		$this->accounts->clients[ Twitter::ACCOUNT_KEY ] = new Twitter();
 
-		$this->accounts->twitter = new Twitter();
-		$this->accounts->twitter->init();
+		// Init clients.
+		$this->accounts->clients[ Facebook::ACCOUNT_KEY ]->init();
+		$this->accounts->clients[ Twitter::ACCOUNT_KEY ]->init();
 	}
 
 	/**

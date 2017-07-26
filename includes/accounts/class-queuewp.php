@@ -1,8 +1,8 @@
 <?php
 /**
- * Accounts: Facebook class
+ * Accounts: QueueWP class
  *
- * Handles the authentication and setup of a Facebook account.
+ * Handles the authentication and setup of a QueueWP account.
  *
  * @package QueueWP\Accounts
  * @since 0.1
@@ -10,21 +10,19 @@
 
 namespace QueueWP\Accounts;
 
-use QueueWP\QueueWP;
-
 /**
- * Class Facebook
+ * Class QueueWP
  *
  * @package QueueWP\Accounts
  * @since 0.1
  */
-class Facebook {
+class QueueWP {
 	/**
 	 * The key of the client.
 	 *
 	 * @since 0.1
 	 */
-	const ACCOUNT_KEY = 'facebook';
+	const ACCOUNT_KEY = 'queuewp';
 
 	/**
 	 * Init.
@@ -36,12 +34,12 @@ class Facebook {
 	}
 
 	/**
-	 * Register the Facebook account type.
+	 * Register the QueueWP account type.
 	 *
 	 * @since 0.1
 	 */
 	public function register_account( $accounts ) {
-		$accounts[ self::ACCOUNT_KEY ] = __( 'Facebook', 'queuewp' );
+		$accounts[ self::ACCOUNT_KEY ] = __( 'QueueWP', 'queuewp' );
 		return $accounts;
 	}
 
@@ -54,7 +52,7 @@ class Facebook {
 		$token = '';
 
 		if ( empty( $token ) ) {
-			QueueWP::get()->utility()->template->load( 'accounts/facebook-connect' );
+			\QueuewP\QueueWP::get()->utility()->template->load( 'accounts/queuewp-connect' );
 		}
 	}
 }

@@ -112,16 +112,6 @@ class QueueWP {
 	}
 
 	/**
-	 * Returns the schedule objects created by Bootstrap.
-	 *
-	 * @since 0.1
-	 * @return \stdClass
-	 */
-	public function schedule() {
-		return $this->bootstrap->schedule;
-	}
-
-	/**
 	 * Returns the utility objects created by Bootstrap.
 	 *
 	 * @since 0.1
@@ -129,6 +119,36 @@ class QueueWP {
 	 */
 	public function utility() {
 		return $this->bootstrap->utility;
+	}
+
+	/**
+	 * Returns the settings objects created by Bootstrap.
+	 *
+	 * @since 0.1
+	 * @return \stdClass
+	 */
+	public function settings() {
+		return $this->bootstrap->settings;
+	}
+
+	/**
+	 * Returns the accounts objects created by Bootstrap.
+	 *
+	 * @since 0.1
+	 * @return \stdClass
+	 */
+	public function accounts() {
+		return $this->bootstrap->accounts;
+	}
+
+	/**
+	 * Returns the schedule objects created by Bootstrap.
+	 *
+	 * @since 0.1
+	 * @return \stdClass
+	 */
+	public function schedule() {
+		return $this->bootstrap->schedule;
 	}
 }
 

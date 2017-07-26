@@ -77,6 +77,39 @@ class Test_QueueWP extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests that utility returns an object with utility objects.
+	 *
+	 * @since 0.1
+	 * @covers QueueWP::utility()
+	 */
+	public function test_utility() {
+		$this->assertInstanceOf( '\stdClass', $this->instance->utility() );
+		$this->assertInstanceOf( 'QueueWP\Utility\Template', $this->instance->utility()->template );
+	}
+
+	/**
+	 * Tests that settings returns an object with settings objects.
+	 *
+	 * @since 0.1
+	 * @covers QueueWP::settings()
+	 */
+	public function test_settings() {
+		$this->assertInstanceOf( '\stdClass', $this->instance->settings() );
+		$this->assertInstanceOf( 'QueueWP\Settings\Settings', $this->instance->settings()->settings );
+	}
+
+	/**
+	 * Tests that accounts returns an object with accounts objects.
+	 *
+	 * @since 0.1
+	 * @covers QueueWP::accounts()
+	 */
+	public function test_accounts() {
+		$this->assertInstanceOf( '\stdClass', $this->instance->accounts() );
+		$this->assertInstanceOf( 'QueueWP\Accounts\Accounts', $this->instance->accounts()->accounts );
+	}
+
+	/**
 	 * Tests that admin returns an object with schedule objects.
 	 *
 	 * @since 0.1
@@ -84,21 +117,8 @@ class Test_QueueWP extends WP_UnitTestCase {
 	 */
 	public function test_schedule() {
 		$this->instance->init();
-		$this->assertTrue( class_exists( 'QueueWP\Setup\Bootstrap' ) );
 		$this->assertInstanceOf( '\stdClass', $this->instance->schedule() );
 		$this->assertInstanceOf( 'QueueWP\Schedule\Schedule', $this->instance->schedule()->schedule );
-	}
-
-	/**
-	 * Tests that utility returns an object with utility objects.
-	 *
-	 * @since 0.1
-	 * @covers QueueWP::utility()
-	 */
-	public function test_utility() {
-		$this->assertTrue( class_exists( 'QueueWP\Setup\Bootstrap' ) );
-		$this->assertInstanceOf( '\stdClass', $this->instance->utility() );
-		$this->assertInstanceOf( 'QueueWP\Utility\Template', $this->instance->utility()->template );
 	}
 
 	/**

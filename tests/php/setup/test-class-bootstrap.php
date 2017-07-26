@@ -72,15 +72,15 @@ class Test_Bootstrap extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Tests if admin objects are created.
+	 * Tests if objects are created.
 	 *
 	 * @since 0.1
-	 * @covers QueueWP\Setup\Bootstrap::schedule_init()
+	 * @covers QueueWP\Setup\Bootstrap::settings_init()
 	 */
-	public function test_schedule_init() {
-		$this->instance->schedule_init();
-		$this->assertNotEmpty( $this->instance->schedule->schedule );
-		$this->assertInstanceOf( 'QueueWP\Schedule\Schedule', $this->instance->schedule->schedule );
+	public function test_settings_init() {
+		$this->instance->settings_init();
+		$this->assertNotEmpty( $this->instance->settings->settings );
+		$this->assertInstanceOf( 'QueueWP\Settings\Settings', $this->instance->settings->settings );
 	}
 
 	/**
@@ -93,7 +93,20 @@ class Test_Bootstrap extends \WP_UnitTestCase {
 		$this->instance->accounts_init();
 		$this->assertNotEmpty( $this->instance->accounts->accounts );
 		$this->assertInstanceOf( 'QueueWP\Accounts\Accounts', $this->instance->accounts->accounts );
-		$this->assertInstanceOf( 'QueueWP\Accounts\Facebook', $this->instance->accounts->facebook );
-		$this->assertInstanceOf( 'QueueWP\Accounts\Twitter', $this->instance->accounts->twitter );
+		$this->assertTrue( is_array( $this->instance->accounts->clients ) );
+		$this->assertInstanceOf( 'QueueWP\Accounts\Facebook', $this->instance->accounts->clients['facebook'] );
+		$this->assertInstanceOf( 'QueueWP\Accounts\Twitter', $this->instance->accounts->clients['twitter'] );
+	}
+
+	/**
+	 * Tests if admin objects are created.
+	 *
+	 * @since 0.1
+	 * @covers QueueWP\Setup\Bootstrap::schedule_init()
+	 */
+	public function test_schedule_init() {
+		$this->instance->schedule_init();
+		$this->assertNotEmpty( $this->instance->schedule->schedule );
+		$this->assertInstanceOf( 'QueueWP\Schedule\Schedule', $this->instance->schedule->schedule );
 	}
 }

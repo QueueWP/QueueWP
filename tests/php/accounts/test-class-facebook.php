@@ -51,4 +51,18 @@ class Test_Facebook extends \WP_UnitTestCase {
 		$accounts = $this->instance->register_account( array() );
 		$this->assertContains( 'Facebook', $accounts );
 	}
+
+	/**
+	 * Tests that the account form gets rendered.
+	 *
+	 * @since 0.1
+	 * @covers QueueWP\Accounts\Facebook::render_settings()
+	 */
+	public function test_render_settings() {
+		ob_start();
+		$this->instance->render_settings();
+		$settings = ob_get_clean();
+
+		$this->assertContains( '<input type="submit" value="Connect To Facebook.com" />', $settings );
+	}
 }
