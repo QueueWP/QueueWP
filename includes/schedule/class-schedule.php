@@ -27,7 +27,7 @@ class Schedule {
 	const META_BOX_STYLE_HANDLE = 'queuewp_meta_box_admin_css';
 
 	/**
-	 * Meta_Box constructor.
+	 * Init.
 	 *
 	 * @since 0.1
 	 */

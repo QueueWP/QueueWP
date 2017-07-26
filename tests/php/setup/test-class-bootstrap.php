@@ -60,6 +60,30 @@ class Test_Bootstrap extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests if objects are created.
+	 *
+	 * @since 0.1
+	 * @covers QueueWP\Setup\Bootstrap::utility_init()
+	 */
+	public function test_utility_init() {
+		$this->instance->utility_init();
+		$this->assertNotEmpty( $this->instance->utility->template );
+		$this->assertInstanceOf( 'QueueWP\Utility\Template', $this->instance->utility->template );
+	}
+
+	/**
+	 * Tests if objects are created.
+	 *
+	 * @since 0.1
+	 * @covers QueueWP\Setup\Bootstrap::settings_init()
+	 */
+	public function test_settings_init() {
+		$this->instance->settings_init();
+		$this->assertNotEmpty( $this->instance->settings->settings );
+		$this->assertInstanceOf( 'QueueWP\Settings\Settings', $this->instance->settings->settings );
+	}
+
+	/**
 	 * Tests if accounts objects are created.
 	 *
 	 * @since 0.1
@@ -72,18 +96,6 @@ class Test_Bootstrap extends \WP_UnitTestCase {
 		$this->assertTrue( is_array( $this->instance->accounts->clients ) );
 		$this->assertInstanceOf( 'QueueWP\Accounts\Facebook', $this->instance->accounts->clients['facebook'] );
 		$this->assertInstanceOf( 'QueueWP\Accounts\Twitter', $this->instance->accounts->clients['twitter'] );
-	}
-
-	/**
-	 * Tests if objects are created.
-	 *
-	 * @since 0.1
-	 * @covers QueueWP\Setup\Bootstrap::utility_init()
-	 */
-	public function test_utility_init() {
-		$this->instance->utility_init();
-		$this->assertNotEmpty( $this->instance->utility->template );
-		$this->assertInstanceOf( 'QueueWP\Utility\Template', $this->instance->utility->template );
 	}
 
 	/**
