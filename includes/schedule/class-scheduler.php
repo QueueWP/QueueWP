@@ -19,21 +19,36 @@ use QueueWP\Setup\Custom_Post_Types;
  * @since 0.1
  */
 class Scheduler {
+	public function init() {
+		//add_action( 'save_post', array( $this, 'queue_post' ) );
+	}
+
+	public function queue_post( $post_id ) {
+		// @todo: Get the accounts this should be submitted to
+		$accounts = array( 'facebook' );
+
+		// @todo: Implement check to make sure we should add it to the queue
+
+		if ( ! empty( $accounts ) ) {
+			$this->add_to_queue( $post_id, $accounts, 'Test social network post' );
+		}
+	}
+
 	/**
 	 * Adds a post to the queue to be sent to social networks.
 	 *
 	 * @since 2.1
 	 * @param int    $parent   The ID of the parent post (the post to be sent to social).
-	 * @param array  $networks Array of networks where the post should be sent to.
+	 * @param array  $accounts Array of accounts where the post should be sent to.
 	 * @param string $content  The content to be shared.
 	 * @param string $datetime The datetime when this post should be sent out.
 	 * @param array  $images   Array of images to be shared.
-	 * @param array  $url_data Array of data for the URL being shared.
+	 * @param array  $urls     Array of data for the URL being shared.
 	 * @return int|\WP_Error
 	 */
-	public function add_to_queue( $parent = 0, $networks = array(), $content, $datetime = '', $images = array(), $url_data = array() ) {
-		if ( empty( $networks ) ) {
-			return new \WP_Error( 'queuewp-error', __( 'A social network must be selected when scheduling a post', 'queuewp' ) );
+	public function add_to_queue( $parent = 0, $accounts = array(), $content, $datetime = '', $images = array(), $urls = array() ) {
+		if ( empty( $accounts ) ) {
+			return new \WP_Error( 'queuewp-error', __( 'A n account must be selected when scheduling a post', 'queuewp' ) );
 		}
 
 		if ( empty( $content ) ) {
@@ -57,12 +72,13 @@ class Scheduler {
 		$result = wp_insert_post(
 			array(
 				'post_type'    => Custom_Post_Types::QUEUE_POST_TYPE_NAME,
-				'post_content' => $content,
+				'post_title'   => $content,
+				'post_content' => '',
 				'post_date'    => $datetime,
 				'meta_input'   => array(
 					'parent'   => $parent,
-					'networks' => $networks,
-					'url_data' => $url_data,
+					'accounts' => $accounts,
+					'url'      => array( $urls ),
 				),
 			)
 		);

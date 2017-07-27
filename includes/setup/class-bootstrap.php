@@ -179,5 +179,6 @@ class Bootstrap {
 		$this->schedule->schedule->init();
 
 		$this->schedule->scheduler = new Scheduler();
+		$this->schedule->scheduler->init();
 	}
 }
