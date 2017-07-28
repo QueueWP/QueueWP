@@ -20,17 +20,31 @@ use QueueWP\Setup\Custom_Post_Types;
  */
 class Scheduler {
 	public function init() {
-		//add_action( 'save_post', array( $this, 'queue_post' ) );
+		add_action( 'save_post', array( $this, 'queue_post' ) );
 	}
 
 	public function queue_post( $post_id ) {
+		if ( wp_is_post_revision( $post_id ) ) {
+			return;
+		}
+
+		$post = get_post( $post_id );
+
+		if ( 'publish' !== $post->post_status ) {
+			return;
+		}
+
 		// @todo: Get the accounts this should be submitted to
 		$accounts = array( 'facebook' );
 
 		// @todo: Implement check to make sure we should add it to the queue
 
 		if ( ! empty( $accounts ) ) {
+			remove_action( 'save_post', array( $this, 'queue_post' ) );
+
 			$this->add_to_queue( $post_id, $accounts, 'Test social network post' );
+
+			add_action( 'save_post', array( $this, 'queue_post' ) );
 		}
 	}
 
@@ -75,6 +89,7 @@ class Scheduler {
 				'post_title'   => $content,
 				'post_content' => '',
 				'post_date'    => $datetime,
+				'post_status'  => 'publish',
 				'meta_input'   => array(
 					'parent'   => $parent,
 					'accounts' => $accounts,
