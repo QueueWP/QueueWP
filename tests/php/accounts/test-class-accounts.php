@@ -129,21 +129,4 @@ class Test_Accounts extends \WP_UnitTestCase {
 
 		$this->assertEmpty( $settings );
 	}
-
-	/**
-	 * Test that registered accounts are added and returned.
-	 *
-	 * @since 0.1
-	 * @covers QueueWP\Accounts\Accounts::get_accounts()
-	 */
-	public function test_get_accounts() {
-		add_filter( 'queuewp_accounts', function( $accounts ) {
-			$accounts[] = 'Test';
-			return $accounts;
-		} );
-
-		$accounts = $this->instance->get_accounts();
-		$this->assertNotEmpty( $accounts );
-		$this->assertContains( 'Test', $accounts );
-	}
 }

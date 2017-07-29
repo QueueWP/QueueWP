@@ -1,14 +1,12 @@
 <?php
 /**
- * Tests: Facebook
- *
- * Tests the functionality in accounts/class-facebook.php
+ * Tests the functionality in clients/class-facebook.php
  *
  * @package QueueWP
  * @since 0.1
  */
 
-use QueueWP\Accounts\Facebook;
+use QueueWP\Clients\Facebook;
 
 class Test_Facebook extends \WP_UnitTestCase {
 	/**
@@ -34,29 +32,30 @@ class Test_Facebook extends \WP_UnitTestCase {
 	 * Tests that actions are registered.
 	 *
 	 * @since 0.1
-	 * @covers QueueWP\Accounts\Facebook::init()
+	 * @covers QueueWP\Clients\Facebook::init()
 	 */
 	public function test_init() {
 		$this->instance->init();
-		$this->assertEquals( 10, has_filter( 'queuewp_accounts', array( $this->instance, 'register_account' ) ) );
+		$this->assertEquals( 10, has_filter( 'queuewp_clients', array( $this->instance, 'register_client' ) ) );
 	}
 
 	/**
-	 * Tests that Facebook gets added to the registered accounts array.
+	 * Tests that Facebook gets added to the registered account clients array.
 	 *
 	 * @since 0.1
-	 * @covers QueueWP\Accounts\Facebook::register_account()
+	 * @covers QueueWP\Clients\Facebook::register_client()
 	 */
-	public function test_register_account() {
-		$accounts = $this->instance->register_account( array() );
-		$this->assertContains( 'Facebook', $accounts );
+	public function test_register_client() {
+		$client = $this->instance->register_client( array() );
+		$this->assertNotEmpty( $client['facebook'] );
+		$this->assertContains( 'Facebook', $client['facebook']['label'] );
 	}
 
 	/**
-	 * Tests that the account form gets rendered.
+	 * Tests that the account client form gets rendered.
 	 *
 	 * @since 0.1
-	 * @covers QueueWP\Accounts\Facebook::render_settings()
+	 * @covers QueueWP\Clients\Facebook::render_settings()
 	 */
 	public function test_render_settings() {
 		ob_start();

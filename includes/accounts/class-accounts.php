@@ -1,7 +1,5 @@
 <?php
 /**
- * Admin: Accounts class
- *
  * Handles the accounts page when linking to a new social network.
  *
  * @package QueueWP\Accounts
@@ -16,7 +14,7 @@ use QueueWP\Setup\Custom_Post_Types;
 /**
  * Class Accounts
  *
- * @package QueueWP\Admin
+ * @package QueueWP\Accounts
  * @since 0.1
  */
 class Accounts {
@@ -85,8 +83,8 @@ class Accounts {
 	 * @since 0.1
 	 */
 	public function render_meta_box() {
-		$accounts = $this->get_accounts();
-		QueueWP::get()->utility()->template->load( 'accounts/meta-box', array( 'accounts' => $accounts ) );
+		$clients = QueueWP::get()->clients()->clients->get_clients();
+		QueueWP::get()->utility()->template->load( 'accounts/meta-box', array( 'clients' => $clients ) );
 	}
 
 	/**
@@ -148,21 +146,5 @@ class Accounts {
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			wp_die();
 		}
-	}
-
-	/**
-	 * Returns a list of registered accounts.
-	 *
-	 * @since 0.1
-	 * @return array
-	 */
-	public function get_accounts() {
-		/**
-		 * QueueWP Accounts
-		 *
-		 * @since 2.1
-		 * @param array $accounts The accounts currently registered.
-		 */
-		return apply_filters( 'queuewp_accounts', array() );
 	}
 }
