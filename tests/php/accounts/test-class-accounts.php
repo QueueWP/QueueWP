@@ -1,14 +1,14 @@
 <?php
 /**
- * Tests: Accounts
- *
  * Tests the functionality in accounts/class-accounts.php
  *
  * @package QueueWP
  * @since 0.1
  */
 
+use QueueWP\QueueWP;
 use QueueWP\Accounts\Accounts;
+use QueueWP\Setup\Custom_Post_Types;
 
 class Test_Accounts extends \WP_UnitTestCase {
 	/**
@@ -27,16 +27,29 @@ class Test_Accounts extends \WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		/**
+		/*
 		 * Fake that we're in the WordPress admin area.
 		 *
 		 * Rerun the setup since for this test, we want to load the files as if
 		 * we're in the admin area.
 		 */
 		wp_set_current_user( 1 );
-		set_current_screen( 'edit.php?post_type=queuewp_accounts' );
+		set_current_screen( 'edit-' . Custom_Post_Types::ACCOUNTS_POST_TYPE_NAME );
+
+		/*
+		 * Re-run init on QueueWP class to re-create bootstrap and take in to
+		 * account that we're now admin.
+		 */
+		QueueWP::get()->init();
 
 		$this->instance = new Accounts();
+	}
+
+	public function tearDown() {
+		parent::tearDown();
+
+		// We're not admin anymore.
+		unset( $GLOBALS['current_screen'] );
 	}
 
 	/**
@@ -62,7 +75,8 @@ class Test_Accounts extends \WP_UnitTestCase {
 		global $current_screen, $wp_meta_boxes;
 		$current_screen->post_type = \QueueWP\Setup\Custom_Post_Types::ACCOUNTS_POST_TYPE_NAME;
 		$this->instance->create_meta_box();
-		$this->assertTrue( array_key_exists( 'editphppost_type' . Accounts::META_BOX_NAME, $wp_meta_boxes ) );
+		// @todo: Expand this test to actually check for the metabox.
+		$this->assertTrue( array_key_exists( 'edit-' . Accounts::META_BOX_NAME, $wp_meta_boxes ) );
 	}
 
 	/**
@@ -76,7 +90,7 @@ class Test_Accounts extends \WP_UnitTestCase {
 		$this->instance->render_meta_box();
 		$meta_box = ob_get_clean();
 
-		$this->assertContains( '<select name="account_type" class="account_type">', $meta_box );
+		$this->assertContains( '<select name="account_client" class="account_client">', $meta_box );
 	}
 
 	/**
@@ -107,8 +121,8 @@ class Test_Accounts extends \WP_UnitTestCase {
 	 */
 	public function test_render_account_settings() {
 		// Fake form values.
-		$_POST['account'] = 'facebook';
-		$_POST['nonce']   = wp_create_nonce( Accounts::NONCE_ACTION );
+		$_POST['client'] = 'facebook';
+		$_POST['nonce']  = wp_create_nonce( Accounts::NONCE_ACTION );
 
 		// Setup our clients.
 		\QueueWP\QueueWP::get()->init();
@@ -120,8 +134,8 @@ class Test_Accounts extends \WP_UnitTestCase {
 		$this->assertContains( '<input type="submit" value="Connect To Facebook.com" />', $settings );
 
 		// Bad client form values.
-		$_POST['account'] = 'none';
-		$_POST['nonce']   = wp_create_nonce( Accounts::NONCE_ACTION );
+		$_POST['client'] = 'none';
+		$_POST['nonce']  = wp_create_nonce( Accounts::NONCE_ACTION );
 
 		ob_start();
 		$this->instance->render_account_settings();

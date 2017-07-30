@@ -55,6 +55,14 @@ class Bootstrap {
 	public $settings;
 
 	/**
+	 * Class containing client objects.
+	 *
+	 * @since 0.1
+	 * @var object
+	 */
+	public $clients;
+
+	/**
 	 * Class containing accounts functionality objects.
 	 *
 	 * @since 0.1

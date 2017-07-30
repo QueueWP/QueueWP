@@ -83,7 +83,7 @@ class Accounts {
 	 * @since 0.1
 	 */
 	public function render_meta_box() {
-		$clients = QueueWP::get()->clients()->clients->get_clients();
+		$clients = QueueWP::get()->clients()->clients;
 		QueueWP::get()->utility()->template->load( 'accounts/meta-box', array( 'clients' => $clients ) );
 	}
 
@@ -136,11 +136,11 @@ class Accounts {
 			return;
 		}
 
-		$account = sanitize_text_field( wp_unslash( $_POST['account'] ) );
-		$clients = QueueWP::get()->accounts()->clients;
+		$client  = sanitize_text_field( wp_unslash( $_POST['client'] ) );
+		$clients = QueueWP::get()->clients()->registered_clients;
 
-		if ( array_key_exists( $account, $clients ) && method_exists( $clients[ $account ], 'render_settings' ) ) {
-			$clients[ $account ]->render_settings();
+		if ( array_key_exists( $client, $clients ) && method_exists( $clients[ $client ], 'render_settings' ) ) {
+			$clients[ $client ]->render_settings();
 		}
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {

@@ -5,7 +5,7 @@
 				<div class="queuewp-accounts">
 					<ul>
 						<?php
-						$accounts = \QueueWP\QueueWP::get()->accounts()->clients;
+						$accounts = \QueueWP\QueueWP::get()->clients()->clients;
 
 						if ( count( $accounts ) > 0 ) :
 							foreach ( $accounts as $account => $account_data ) :

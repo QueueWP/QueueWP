@@ -21,7 +21,7 @@ var queueWPAccounts = ( function( $ ) {
 				component.action,
 				{
 					nonce: component.nonce,
-					account: $( '.account_type' ).val()
+					client: $( '.account_type' ).val()
 				}
 			);
 

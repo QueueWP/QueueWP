@@ -84,6 +84,21 @@ class Test_Bootstrap extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests if client objects are created.
+	 *
+	 * @since 0.1
+	 * @covers QueueWP\Setup\Bootstrap::clients_init()
+	 */
+	public function test_clients_init() {
+		$this->instance->clients_init();
+		$this->assertNotEmpty( $this->instance->clients->clients );
+		$this->assertInstanceOf( 'QueueWP\Clients\Clients', $this->instance->clients->clients );
+		$this->assertTrue( is_array( $this->instance->clients->registered_clients ) );
+		$this->assertInstanceOf( 'QueueWP\Clients\Facebook', $this->instance->clients->registered_clients['facebook'] );
+		$this->assertInstanceOf( 'QueueWP\Clients\Twitter', $this->instance->clients->registered_clients['twitter'] );
+	}
+
+	/**
 	 * Tests if accounts objects are created.
 	 *
 	 * @since 0.1
@@ -93,9 +108,6 @@ class Test_Bootstrap extends \WP_UnitTestCase {
 		$this->instance->accounts_init();
 		$this->assertNotEmpty( $this->instance->accounts->accounts );
 		$this->assertInstanceOf( 'QueueWP\Accounts\Accounts', $this->instance->accounts->accounts );
-		$this->assertTrue( is_array( $this->instance->accounts->clients ) );
-		$this->assertInstanceOf( 'QueueWP\Accounts\Facebook', $this->instance->accounts->clients['facebook'] );
-		$this->assertInstanceOf( 'QueueWP\Accounts\Twitter', $this->instance->accounts->clients['twitter'] );
 	}
 
 	/**

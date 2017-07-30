@@ -60,7 +60,7 @@ class Test_Template extends \WP_UnitTestCase {
 	 */
 	public function test_load_data() {
 		ob_start();
-		$this->instance->load( 'accounts/meta-box', array( 'accounts' => array( 'twitter' => 'Twitter' ) ) );
+		$this->instance->load( 'accounts/meta-box', array( 'clients' => array( 'twitter' => array( 'label' => 'Twitter' ) ) ) );
 		$template = ob_get_clean();
 
 		$this->assertContains( '<option value="twitter">Twitter</option>', $template );
