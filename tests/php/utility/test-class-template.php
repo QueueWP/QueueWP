@@ -1,14 +1,14 @@
 <?php
 /**
- * Tests: Template class
- *
  * Tests the functionality in utility/class-template.php
  *
  * @package QueueWP
  * @since 0.1
  */
 
+use QueueWP\QueueWP;
 use QueueWP\Utility\Template;
+use QueueWP\Setup\Custom_Post_Types;
 
 /**
  * Class Test_Template
@@ -35,7 +35,37 @@ class Test_Template extends \WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 
+		/*
+		 * Fake that we're in the WordPress admin area.
+		 *
+		 * Rerun the setup since for this test, we want to load the files as if
+		 * we're in the admin area.
+		 */
+		wp_set_current_user( 1 );
+		set_current_screen( 'edit-' . Custom_Post_Types::ACCOUNTS_POST_TYPE_NAME );
+
+		/*
+		 * Re-run init on QueueWP class to re-create bootstrap and take in to
+		 * account that we're now admin.
+		 */
+		QueueWP::get()->init();
+
 		$this->instance = new Template();
+	}
+
+	/**
+	 * Tear down the tests.
+	 *
+	 * @since 0.1
+	 */
+	public function tearDown() {
+		parent::tearDown();
+
+		// We're not admin anymore.
+		unset( $GLOBALS['current_screen'] );
+
+		// Reset plugin so that admin objects are not created.
+		QueueWP::get()->init();
 	}
 
 	/**

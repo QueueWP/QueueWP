@@ -45,11 +45,19 @@ class Test_Accounts extends \WP_UnitTestCase {
 		$this->instance = new Accounts();
 	}
 
+	/**
+	 * Tear down the tests.
+	 *
+	 * @since 0.1
+	 */
 	public function tearDown() {
 		parent::tearDown();
 
 		// We're not admin anymore.
 		unset( $GLOBALS['current_screen'] );
+
+		// Reset plugin so that admin objects are not created.
+		QueueWP::get()->init();
 	}
 
 	/**
