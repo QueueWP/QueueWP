@@ -16,12 +16,12 @@ var queueWPAccounts = ( function( $ ) {
 	}
 
 	component.init = function() {
-		elAccountsSelect.on( 'change', '.account_type', function( e ) {
+		elAccountsSelect.on( 'change', '.account_client', function( e ) {
 			var result = wp.ajax.post(
 				component.action,
 				{
 					nonce: component.nonce,
-					client: $( '.account_type' ).val()
+					client: $( '.account_client' ).val()
 				}
 			);
 
