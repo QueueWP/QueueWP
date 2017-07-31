@@ -33,7 +33,7 @@
     overflow: hidden;
 }
 
-.queuewp-networks {
+.queuewp-accounts {
     float: left;
 }
 
@@ -64,7 +64,7 @@
     outline: 0;
 }
 
-.queuewp-networks ul li,
+.queuewp-accounts ul li,
 .queuewp-actions ul li {
     float: left;
     padding-right: 10px;

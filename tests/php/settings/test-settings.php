@@ -8,6 +8,7 @@
  * @since 0.1
  */
 
+use QueueWP\QueueWP;
 use QueueWP\Settings\Settings;
 
 class Test_Settings extends \WP_UnitTestCase {
@@ -36,7 +37,28 @@ class Test_Settings extends \WP_UnitTestCase {
 		wp_set_current_user( 1 );
 		set_current_screen( 'edit.php' );
 
+		/*
+		 * Re-run init on QueueWP class to re-create bootstrap and take in to
+		 * account that we're now admin.
+		 */
+		QueueWP::get()->init();
+
 		$this->instance = new Settings();
+	}
+
+	/**
+	 * Tear down the tests.
+	 *
+	 * @since 0.1
+	 */
+	public function tearDown() {
+		parent::tearDown();
+
+		// We're not admin anymore.
+		unset( $GLOBALS['current_screen'] );
+
+		// Reset plugin so that admin objects are not created.
+		QueueWP::get()->init();
 	}
 
 	/**

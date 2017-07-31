@@ -1,7 +1,5 @@
 <?php
 /**
- * Admin: Accounts class
- *
  * Handles the accounts page when linking to a new social network.
  *
  * @package QueueWP\Accounts
@@ -16,7 +14,7 @@ use QueueWP\Setup\Custom_Post_Types;
 /**
  * Class Accounts
  *
- * @package QueueWP\Admin
+ * @package QueueWP\Accounts
  * @since 0.1
  */
 class Accounts {
@@ -85,8 +83,8 @@ class Accounts {
 	 * @since 0.1
 	 */
 	public function render_meta_box() {
-		$accounts = $this->get_accounts();
-		QueueWP::get()->utility()->template->load( 'accounts/meta-box', array( 'accounts' => $accounts ) );
+		$clients = QueueWP::get()->clients()->clients;
+		QueueWP::get()->utility()->template->load( 'accounts/meta-box', array( 'clients' => $clients ) );
 	}
 
 	/**
@@ -138,31 +136,15 @@ class Accounts {
 			return;
 		}
 
-		$account = sanitize_text_field( wp_unslash( $_POST['account'] ) );
-		$clients = QueueWP::get()->accounts()->clients;
+		$client  = sanitize_text_field( wp_unslash( $_POST['client'] ) );
+		$clients = QueueWP::get()->clients()->registered_clients;
 
-		if ( array_key_exists( $account, $clients ) && method_exists( $clients[ $account ], 'render_settings' ) ) {
-			$clients[ $account ]->render_settings();
+		if ( array_key_exists( $client, $clients ) && method_exists( $clients[ $client ], 'render_settings' ) ) {
+			$clients[ $client ]->render_settings();
 		}
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			wp_die();
 		}
-	}
-
-	/**
-	 * Returns a list of registered accounts.
-	 *
-	 * @since 0.1
-	 * @return array
-	 */
-	public function get_accounts() {
-		/**
-		 * QueueWP Accounts
-		 *
-		 * @since 2.1
-		 * @param array $accounts The accounts currently registered.
-		 */
-		return apply_filters( 'queuewp_accounts', array() );
 	}
 }

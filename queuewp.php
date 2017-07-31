@@ -132,6 +132,16 @@ class QueueWP {
 	}
 
 	/**
+	 * Returns the client objects created by Bootstrap.
+	 *
+	 * @since 0.1
+	 * @return \stdClass
+	 */
+	public function clients() {
+		return $this->bootstrap->clients;
+	}
+
+	/**
 	 * Returns the accounts objects created by Bootstrap.
 	 *
 	 * @since 0.1

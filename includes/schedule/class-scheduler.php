@@ -62,7 +62,7 @@ class Scheduler {
 	 */
 	public function add_to_queue( $parent = 0, $accounts = array(), $content, $datetime = '', $images = array(), $urls = array() ) {
 		if ( empty( $accounts ) ) {
-			return new \WP_Error( 'queuewp-error', __( 'A n account must be selected when scheduling a post', 'queuewp' ) );
+			return new \WP_Error( 'queuewp-error', __( 'An account must be selected when scheduling a post', 'queuewp' ) );
 		}
 
 		if ( empty( $content ) ) {

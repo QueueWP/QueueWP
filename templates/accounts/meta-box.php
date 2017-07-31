@@ -1,10 +1,10 @@
 <div id="queuewp-accounts">
-	<label for="account_type"><?php esc_html_e( 'Choose account type', 'queuewp' ); ?></label>
-	<select name="account_type" class="account_type">
+	<label for="account_client"><?php esc_html_e( 'Choose account type', 'queuewp' ); ?></label>
+	<select name="account_client" class="account_client">
 		<option><?php esc_html_e( '-- Select --', 'queuewp' ); ?></option>
-		<?php if ( ! empty( $data['accounts'] ) ) : ?>
-			<?php foreach ( $data['accounts'] as $id => $account ) : ?>
-				<option value="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $account ); ?></option>
+		<?php if ( ! empty( $data['clients'] ) ) : ?>
+			<?php foreach ( $data['clients'] as $client => $client_data ) : ?>
+				<option value="<?php echo esc_attr( $client ); ?>"><?php echo esc_html( $client_data['label'] ); ?></option>
 			<?php endforeach; ?>
 		<?php endif; ?>
 	</select>

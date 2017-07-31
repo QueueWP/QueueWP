@@ -1,7 +1,5 @@
 <?php
 /**
- * Tests: QueueWP class
- *
  * Tests the functionality in queuewp.php
  *
  * @package QueueWP
@@ -35,7 +33,37 @@ class Test_QueueWP extends WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 
+		/*
+		 * Fake that we're in the WordPress admin area.
+		 *
+		 * Rerun the setup since for this test, we want to load the files as if
+		 * we're in the admin area.
+		 */
+		wp_set_current_user( 1 );
+		set_current_screen( 'edit.php' );
+
+		/*
+		 * Re-run init on QueueWP class to re-create bootstrap and take in to
+		 * account that we're now admin.
+		 */
+		QueueWP::get()->init();
+
 		$this->instance = QueueWP::get();
+	}
+
+	/**
+	 * Tear down the tests.
+	 *
+	 * @since 0.1
+	 */
+	public function tearDown() {
+		parent::tearDown();
+
+		// We're not admin anymore.
+		unset( $GLOBALS['current_screen'] );
+
+		// Reset plugin so that admin objects are not created.
+		QueueWP::get()->init();
 	}
 
 	/**
@@ -96,6 +124,17 @@ class Test_QueueWP extends WP_UnitTestCase {
 	public function test_settings() {
 		$this->assertInstanceOf( '\stdClass', $this->instance->settings() );
 		$this->assertInstanceOf( 'QueueWP\Settings\Settings', $this->instance->settings()->settings );
+	}
+
+	/**
+	 * Tests that clients returns an object with client objects.
+	 *
+	 * @since 0.1
+	 * @covers QueueWP::clients()
+	 */
+	public function test_clients() {
+		$this->assertInstanceOf( '\stdClass', $this->instance->clients() );
+		$this->assertInstanceOf( 'QueueWP\Clients\Clients', $this->instance->clients()->clients );
 	}
 
 	/**
